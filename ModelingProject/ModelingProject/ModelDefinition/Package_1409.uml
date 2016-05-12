@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="09b87d55-f181-42fe-a3d8-962eae97e134"
+  name="Youtube" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="8da53b85-8270-4cd8-a885-3b3704a308c7">
+      <body>
+All the graphical classes are
+placed in this package.</body>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="5ea083cd-e22c-4834-aebe-6f18c66d4693"
+        LastKnownName="Repository"
+        LastKnownLocation="Package_1408.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="d6158d4b-86da-4f83-b3a4-1f32d77262d3"
+        LastKnownName="DAL"
+        LastKnownLocation="Package_1424.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="5ed7f824-301b-4fc6-a326-872f4af2b7d9"
+        LastKnownName="Types"
+        LastKnownLocation="Package_1434.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

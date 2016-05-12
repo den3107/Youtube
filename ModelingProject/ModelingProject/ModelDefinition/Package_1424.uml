@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="d6158d4b-86da-4f83-b3a4-1f32d77262d3"
+  name="DAL" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="e7b53092-9291-47b1-b803-cec8878286f4"
+        name="DAL"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="bdcdd01b-5931-4605-ab68-15287925f625">
+            <interfaceMoniker
+              Id="ef9f5843-52cc-42ef-ad42-06d1f066e1df"
+              LastKnownName="IRepository"
+              LastKnownLocation="Package_1408.uml" />
+          </interfaceRealization>
+          <dependency
+            Id="faab4ca0-65b9-431c-8310-4389a773e97b">
+            <packageMoniker
+              Id="5ea083cd-e22c-4834-aebe-6f18c66d4693"
+              LastKnownName="Repository"
+              LastKnownLocation="Package_1408.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="c6949957-3ba4-4e6d-914e-cadbd44ee88c"
+            name="DAL"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="02a4bd10-b877-443f-b7f1-8eb691573cd1"
+                  name="repository"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="833f0e55-c18e-4289-ba8f-0989fcf29e29"
+                      LastKnownName="IRepository"
+                      LastKnownLocation="Package_1424.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="833f0e55-c18e-4289-ba8f-0989fcf29e29"
+        name="IRepository" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
