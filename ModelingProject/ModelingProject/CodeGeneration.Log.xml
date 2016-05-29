@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/VISUAL STUDIO 2015 ENTERPRISE/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/CodeGenLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="High" Text="Code generation or text transformation started." />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Name = ClassTemplate" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ResolvedTemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Medium" Text="ModelingProject's Text Template Binding: 'ClassTemplate' will apply ClassTemplate.t4 to: 'ModelingProject::Youtube::Types::Video' -  (Class) " />
+  <Error Timestamp="2016-05-29T12:54:19" Importance="High" Text="The following Template File Path property for 'ModelingProject::Youtube::Types::Video' -  (Class) does not exist: E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="'ModelingProject::Youtube::Types::Video' -  (Class): no file generated because the 'AppliesToElement' method of the template 'ClassTemplate.t4' evaluated to false." />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Name = EnumTemplate" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ResolvedTemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Medium" Text="ModelingProject's Text Template Binding: 'EnumTemplate' will apply EnumTemplate.t4 to: 'ModelingProject::Youtube::Types::Video' -  (Class) " />
+  <Error Timestamp="2016-05-29T12:54:19" Importance="High" Text="The following Template File Path property for 'ModelingProject::Youtube::Types::Video' -  (Class) does not exist: E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="'ModelingProject::Youtube::Types::Video' -  (Class): no file generated because the 'AppliesToElement' method of the template 'EnumTemplate.t4' evaluated to false." />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Name = InterfaceTemplate" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ResolvedTemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Medium" Text="ModelingProject's Text Template Binding: 'InterfaceTemplate' will apply InterfaceTemplate.t4 to: 'ModelingProject::Youtube::Types::Video' -  (Class) " />
+  <Error Timestamp="2016-05-29T12:54:19" Importance="High" Text="The following Template File Path property for 'ModelingProject::Youtube::Types::Video' -  (Class) does not exist: E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="'ModelingProject::Youtube::Types::Video' -  (Class): no file generated because the 'AppliesToElement' method of the template 'InterfaceTemplate.t4' evaluated to false." />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Name = StructTemplate" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ProjectPath = ..\ModelingProjectLib\ModelingProjectLib.csproj" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="TemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="ResolvedTemplateFilePath = E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Medium" Text="ModelingProject's Text Template Binding: 'StructTemplate' will apply StructTemplate.t4 to: 'ModelingProject::Youtube::Types::Video' -  (Class) " />
+  <Error Timestamp="2016-05-29T12:54:19" Importance="High" Text="The following Template File Path property for 'ModelingProject::Youtube::Types::Video' -  (Class) does not exist: E:\VISUAL STUDIO 2015\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="Diagnostic" Text="'ModelingProject::Youtube::Types::Video' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2016-05-29T12:54:19" Importance="High" Text="Code generation complete. Errors: 4. Warnings: 0." />
+</Log>
