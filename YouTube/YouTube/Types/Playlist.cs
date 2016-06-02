@@ -18,38 +18,6 @@ namespace YouTube.Types
 
         private DAL dal = new DAL(new OracleRepository());
 
-        public Playlist(String description, int playlistId, String title, DateTime uploadDate, Channel creator, List<Video> videos = null)
-        {
-            Description = description;
-            PlaylistId = playlistId;
-            Title = title;
-            UploadDate = uploadDate;
-            Creator = creator;
-            Videos = videos ?? new List<Video>();
-        }
 
-        public void AddVideo(Video video)
-        {
-            dal.AddVideoToPlaylist(PlaylistId, video);
-            Videos.Add(video);
-        }
-
-        public void EditDescription(String description)
-        {
-            dal.EditDescriptionOfPlaylist(PlaylistId, description);
-            Description = description;
-        }
-
-        public void EditTitle(String title)
-        {
-            dal.EditTitleOfPlaylist(PlaylistId, title);
-            Title = title;
-        }
-
-        public void RemoveVideo(Video video)
-        {
-            dal.RemoveVideoFromPlaylist(PlaylistId, video.VideoId);
-            Videos.Remove(video);
-        }
     }
 }

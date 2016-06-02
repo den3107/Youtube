@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="0a556483-4d26-41ad-bf95-6504155e3c91" name="UMLClassDiagram" linkedPackageId="9e589256-5025-435d-a077-a97f1034e515" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="0a556483-4d26-41ad-bf95-6504155e3c91" name="UMLClassDiagram" linkedPackageId="9e589256-5025-435d-a077-a97f1034e515" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <appliedStereotypesInternal>
     <stereotypeInstance Id="22d73c47-eadd-42ec-bf2a-57a8c4c6051d" name="namespace" profile="CSharpProfile">
       <elementDefinition Id="e026ac83-cc8d-4c13-9a69-c430782cda0b" />
@@ -72,6 +72,20 @@
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="2272d53c-56dd-410e-817e-9a0b62306aec">
+      <profileInstance Id="ef3cf9aa-e22f-44a7-a52d-df2f75932773" name="CSharpProfile">
+        <elementDefinition Id="2831907d-6084-4d80-ae44-457dc7df65a1" />
+      </profileInstance>
+      <elementDefinition Id="d3d313ee-e611-455a-9305-f4824f304434" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="c93abe77-662c-498a-a0ae-9bcc92fbb17d">
+      <profileInstance Id="7c647e85-656a-4b9f-83b5-b5950dc4400a" name="TextTemplateBindings">
+        <elementDefinition Id="5d6a72d0-8d0f-44d3-b773-44bef4f58c89" />
+      </profileInstance>
+      <elementDefinition Id="d79b6307-52a1-411b-898e-8ef05fafadae" />
+    </packageHasProfileInstances>
+  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasPackages>
       <package Id="f62f157c-4e06-4145-a7a4-efc7d66c91e5" name="Youtube">
@@ -914,12 +928,6 @@ placed in this package.</body>
                           <referencedTypeMoniker Id="4b8be192-19ab-4008-9052-99582f88d3e3" LastKnownName="Boolean" />
                         </type_NamedElement>
                       </property>
-                      <property Id="5385a3f6-2f2f-4b6d-8dc8-65460f8a70ff" name="VideoID" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <elementDefinition Id="1f42bd0e-290d-43a4-8296-50fc2b83b3e3" />
-                        <type_NamedElement>
-                          <referencedTypeMoniker Id="08cb409b-0391-4680-8bce-462967fb3b7f" LastKnownName="Integer" />
-                        </type_NamedElement>
-                      </property>
                     </ownedAttributesInternal>
                     <ownedOperationsInternal>
                       <operation Id="bfa04054-e6e9-4d14-92e7-c5b3711b0df5" name="RemoveUpVote" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
@@ -1175,18 +1183,6 @@ placed in this package.</body>
           <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
         </profileInstance>
         <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-      </packageHasProfileInstances>
-      <packageHasProfileInstances Id="2272d53c-56dd-410e-817e-9a0b62306aec">
-        <profileInstance Id="ef3cf9aa-e22f-44a7-a52d-df2f75932773" name="CSharpProfile">
-          <elementDefinition Id="2831907d-6084-4d80-ae44-457dc7df65a1" />
-        </profileInstance>
-        <elementDefinition Id="d3d313ee-e611-455a-9305-f4824f304434" />
-      </packageHasProfileInstances>
-      <packageHasProfileInstances Id="c93abe77-662c-498a-a0ae-9bcc92fbb17d">
-        <profileInstance Id="7c647e85-656a-4b9f-83b5-b5950dc4400a" name="TextTemplateBindings">
-          <elementDefinition Id="5d6a72d0-8d0f-44d3-b773-44bef4f58c89" />
-        </profileInstance>
-        <elementDefinition Id="d79b6307-52a1-411b-898e-8ef05fafadae" />
       </packageHasProfileInstances>
     </profileInstances>
   </package>
