@@ -135,5 +135,15 @@ namespace YouTube.RepositoryDAL
         {
             repository.RemoveVideoFromPlaylist(playlistId, videoId);
         }
+
+        public List<Video> GetPopularVideosOfChannel(int channelId, int amount)
+        {
+            return repository.GetPopularVideosOfChannel(channelId, amount);
+        }
+
+        public List<Video> GetNewVideosOfChannel(int channelId, int amount)
+        {
+            return repository.GetNewVideosOfChannel(channelId, amount);
+        }
     }
 }

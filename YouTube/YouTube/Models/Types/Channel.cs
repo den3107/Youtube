@@ -59,5 +59,15 @@ namespace YouTube.Types
             dal.RemoveSubscriptionFromChannel(ChannelId, channel.ChannelId);
             Subscriptions.Remove(channel);
         }
+
+        public List<Video> GetPopularVideos(int amount)
+        {
+            return dal.GetPopularVideosOfChannel(ChannelId, amount);
+        }
+
+        public List<Video> GetNewVideos(int amount)
+        {
+            return dal.GetNewVideosOfChannel(ChannelId, amount);
+        }
     }
 }

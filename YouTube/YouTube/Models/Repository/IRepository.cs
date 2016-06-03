@@ -56,5 +56,9 @@ namespace YouTube.Repository
         void RemoveDownVoteToComment(int commentId, int videoId);
 
         void RemoveUpVoteToComment(int commentId, int videoId);
+
+        List<Video> GetPopularVideosOfChannel(int channelId, int amount);
+
+        List<Video> GetNewVideosOfChannel(int channelId, int amount);
     }
 }

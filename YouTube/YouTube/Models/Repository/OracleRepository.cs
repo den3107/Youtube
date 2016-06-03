@@ -129,5 +129,15 @@ namespace YouTube.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<Video> GetPopularVideosOfChannel(int channelId, int amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Video> GetNewVideosOfChannel(int channelId, int amount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
