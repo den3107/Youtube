@@ -30,7 +30,7 @@ namespace YouTube.Types
 
         public void AddVideo(Video video)
         {
-            dal.AddVideoToPlaylist(PlaylistId, video);
+            dal.AddVideoToPlaylist(PlaylistId, video.VideoId);
             Videos.Add(video);
         }
 

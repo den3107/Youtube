@@ -32,7 +32,7 @@ namespace YouTube.Types
 
         public void AddPlaylist(Playlist playlist)
         {
-            dal.AddPlaylistToChannel(ChannelId, playlist);
+            dal.AddPlaylistToChannel(playlist);
             Playlists.Add(playlist);
         }
 
@@ -44,7 +44,7 @@ namespace YouTube.Types
 
         public void AddVideo(Video video)
         {
-            dal.AddVideoToChannel(ChannelId, video);
+            dal.AddVideoToChannel(video);
             Videos.Add(video);
         }
 

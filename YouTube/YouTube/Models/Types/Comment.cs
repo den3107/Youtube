@@ -42,7 +42,7 @@ namespace YouTube.Types
 
         public void AddReply(Comment reply)
         {
-            dal.AddReplytoComment(CommentId, VideoId, reply);
+            dal.AddReplytoComment(CommentId, reply);
             Replies.Add(reply);
         }
 

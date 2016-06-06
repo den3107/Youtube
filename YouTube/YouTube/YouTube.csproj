@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.DataAccess">
+      <HintPath>..\..\..\P-PTS2-S22\EyeCT4Participation\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -128,6 +132,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Models\RepositoryDAL\DAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -148,6 +153,7 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\Home\index.cshtml" />
+    <Content Include="Views\Login\index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

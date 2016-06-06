@@ -10,16 +10,12 @@ namespace YouTube.Types
     public class User
     {
         public String Email { get; private set; }
+
         public List<Channel> Channels { get; private set; }
 
-        private DAL dal = new DAL(new OracleRepository());
+        public Channel ActiveChannel { get; private set; }
 
-        public User(String email, Channel channel)
-        {
-            Email = email;
-            Channels = new List<Channel>();
-            Channels.Add(channel);
-        }
+        private DAL dal = new DAL(new OracleRepository());
 
         public User(String email, List<Channel> channels)
         {
@@ -31,6 +27,11 @@ namespace YouTube.Types
         {
             dal.AddChannelToUser(Email, channel);
             Channels.Add(channel);
+        }
+
+        public void SetActivechannel(int index)
+        {
+            ActiveChannel = dal.GetFullChannel(Channels[index].ChannelId);
         }
     }
 }

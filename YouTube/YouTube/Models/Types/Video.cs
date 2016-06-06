@@ -38,7 +38,7 @@ namespace YouTube.Types
 
         public void AddComment(Comment comment)
         {
-            dal.AddCommentToVideo(VideoId, comment);
+            dal.AddCommentToVideo(comment);
             Comments.Add(comment);
         }
 

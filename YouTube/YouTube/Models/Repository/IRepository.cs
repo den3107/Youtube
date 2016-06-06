@@ -11,17 +11,17 @@ namespace YouTube.Repository
     {
         void AddChannelToUser(String email, Channel channel);
 
-        void AddPlaylistToChannel(int channelId, Playlist playlist);
+        void AddPlaylistToChannel(Playlist playlist);
 
         void AddSubscriptionToChannel(int channelId, int subscriptionId);
 
-        void AddVideoToChannel(int channelId, Video video);
+        void AddVideoToChannel(Video video);
 
         void EditAboutOfChannel(int channelId, String about);
 
         void RemoveSubscriptionFromChannel(int channelId, int subscriptionId);
 
-        void AddVideoToPlaylist(int playlistId, Video video);
+        void AddVideoToPlaylist(int playlistId, int videoId);
 
         void EditDescriptionOfPlaylist(int playlistId, String description);
 
@@ -29,7 +29,7 @@ namespace YouTube.Repository
 
         void RemoveVideoFromPlaylist(int playlistId, int videoId);
 
-        void AddCommentToVideo(int videoId, Comment comment);
+        void AddCommentToVideo(Comment comment);
 
         void AddDownVoteToVideo(int videoId);
 
@@ -47,7 +47,7 @@ namespace YouTube.Repository
 
         void AddDownVoteToComment(int commentId, int videoId);
 
-        void AddReplytoComment(int commentId, int videoId, Comment reply);
+        void AddReplytoComment(int commentId, Comment reply);
 
         void AddUpVoteToComment(int commentId, int videoId);
 
@@ -60,5 +60,11 @@ namespace YouTube.Repository
         List<Video> GetPopularVideosOfChannel(int channelId, int amount);
 
         List<Video> GetNewVideosOfChannel(int channelId, int amount);
+
+        bool ValidateLogin(String email, String password);
+
+        List<Channel> GetUserChannels(String email);
+
+        Channel GetFullChannel(int channelId);
     }
 }

@@ -21,9 +21,9 @@ namespace YouTube.RepositoryDAL
             repository.AddChannelToUser(email, channel);
         }
 
-        public void AddCommentToVideo(int videoId, Comment comment)
+        public void AddCommentToVideo(Comment comment)
         {
-            repository.AddCommentToVideo(videoId, comment);
+            repository.AddCommentToVideo(comment);
         }
 
         public void AddDownVoteToComment(int commentId, int videoId)
@@ -36,14 +36,14 @@ namespace YouTube.RepositoryDAL
             repository.AddDownVoteToVideo(videoId);
         }
 
-        public void AddPlaylistToChannel(int channelId, Playlist playlist)
+        public void AddPlaylistToChannel(Playlist playlist)
         {
-            repository.AddPlaylistToChannel(channelId, playlist);
+            repository.AddPlaylistToChannel(playlist);
         }
 
-        public void AddReplytoComment(int commentId, int videoId, Comment reply)
+        public void AddReplytoComment(int commentId, Comment reply)
         {
-            repository.AddReplytoComment(commentId, videoId, reply);
+            repository.AddReplytoComment(commentId, reply);
         }
 
         public void AddSubscriptionToChannel(int channelId, int subscriptionId)
@@ -61,14 +61,14 @@ namespace YouTube.RepositoryDAL
             repository.AddUpVoteToVideo(videoId);
         }
 
-        public void AddVideoToChannel(int channelId, Video video)
+        public void AddVideoToChannel(Video video)
         {
-            repository.AddVideoToChannel(channelId, video);
+            repository.AddVideoToChannel(video);
         }
 
-        public void AddVideoToPlaylist(int playlistId, Video video)
+        public void AddVideoToPlaylist(int playlistId, int videoId)
         {
-            repository.AddVideoToPlaylist(playlistId, video);
+            repository.AddVideoToPlaylist(playlistId, videoId);
         }
 
         public void AddViewToVideo(int videoId)
@@ -144,6 +144,21 @@ namespace YouTube.RepositoryDAL
         public List<Video> GetNewVideosOfChannel(int channelId, int amount)
         {
             return repository.GetNewVideosOfChannel(channelId, amount);
+        }
+
+        public bool ValidateLogin(String email, String password)
+        {
+            return repository.ValidateLogin(email, password);
+        }
+
+        public List<Channel> GetUserChannels(String email)
+        {
+            return repository.GetUserChannels(email);
+        }
+
+        public Channel GetFullChannel(int channelId)
+        {
+            return repository.GetFullChannel(channelId);
         }
     }
 }
