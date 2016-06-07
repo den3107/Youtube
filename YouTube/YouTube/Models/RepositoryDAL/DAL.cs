@@ -146,6 +146,16 @@ namespace YouTube.RepositoryDAL
             return repository.GetNewVideosOfChannel(channelId, amount);
         }
 
+        public List<Video> GetPopularVideos(int amount)
+        {
+            return repository.GetPopularVideos(amount);
+        }
+
+        public List<Video> GetNewVideos(int amount)
+        {
+            return repository.GetNewVideos(amount);
+        }
+
         public bool ValidateLogin(String email, String password)
         {
             return repository.ValidateLogin(email, password);

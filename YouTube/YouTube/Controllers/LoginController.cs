@@ -16,7 +16,7 @@ namespace YouTube.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            ViewBag["LoginFailed"] = false;
+            ViewBag.LoginFailed = false;
             if(Request.HttpMethod == "POST")
             {
                 String email = Request["inputEmail"];
@@ -28,10 +28,11 @@ namespace YouTube.Controllers
                     Session["LoggedInUser"] = user;
                     user.SetActivechannel(0);
                     Session["ActiveChannel"] = user.ActiveChannel;
+                    Response.Redirect("/", true);
                 }
                 else
                 {
-                    ViewBag["LoginFailed"] = true;
+                    ViewBag.LoginFailed = false;
                 }
             }
             return View();

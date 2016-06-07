@@ -61,6 +61,10 @@ namespace YouTube.Repository
 
         List<Video> GetNewVideosOfChannel(int channelId, int amount);
 
+        List<Video> GetPopularVideos(int amount);
+
+        List<Video> GetNewVideos(int amount);
+
         bool ValidateLogin(String email, String password);
 
         List<Channel> GetUserChannels(String email);

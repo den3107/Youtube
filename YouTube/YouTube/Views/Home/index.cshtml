@@ -14,9 +14,9 @@
     <meta name="description" content="Homepage YouTube">
     <meta name="author" content="Dennis Fokker">
     <title>YouTube</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/base.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/base.css" rel="stylesheet">
+    <link href="~/Content/index.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -99,11 +99,12 @@
                 <span class="title">Populair</span>
                 <div class="row">
                     @{
-                        List<Video> videos = ViewBag["popularVideos"] as List<Video>;
+                        List<Video> videos = ViewBag.popularVideos as List<Video>;
                         foreach (Video video in videos)
                         {
+                            String videoLink = "https://i.ytimg.com/vi/"+video.VideoLink+"/0.jpg";
                             <div class="thumbnail">
-                                <img src="https://i.ytimg.com/vi/@video.VideoLink" />
+                                <img src="@videoLink" />
                                 <div class="caption">
                                     <a href="/watch?v=@video.VideoLink">@video.Title</a><br>
                                     <span><a href="/channel/@video.Creator.ChannelId">@video.Creator.Name</a></span><br>
@@ -150,6 +151,6 @@
         <!-- End content -->
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

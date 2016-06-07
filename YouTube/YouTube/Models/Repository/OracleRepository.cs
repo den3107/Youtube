@@ -4,20 +4,22 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using YouTube.Types;
 
 namespace YouTube.Repository
 {
     public class OracleRepository : IRepository
     {
-        private readonly String connectionString  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.0.15";
+        //private readonly String connectionString  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.0.15";
+        private readonly String connectionString = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=localhost";
 
         private int GetUserId(string email)
         {
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -26,7 +28,7 @@ namespace YouTube.Repository
                 };
 
                 command.Parameters.Add("email", email);
-                return (int) command.ExecuteScalar();
+                return int.Parse(command.ExecuteScalar().ToString());
             }
         }
 
@@ -37,6 +39,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -69,6 +72,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -85,7 +89,7 @@ namespace YouTube.Repository
                         String description = reader["DESCRIPTION"].ToString();
                         int playlistId = int.Parse(reader["PLAYLISTID"].ToString());
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         Channel channel = GetChannel(channelId);
 
                         playlists.Add(new Playlist(description, playlistId, title, uploadDate, channel));
@@ -103,6 +107,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -133,6 +138,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -152,6 +158,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -171,6 +178,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -189,6 +197,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -206,6 +215,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -225,6 +235,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -244,6 +255,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -262,6 +274,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -280,6 +293,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -297,6 +311,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -317,6 +332,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -335,6 +351,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -352,6 +369,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -370,6 +388,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -389,6 +408,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -407,6 +427,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -425,6 +446,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -443,6 +465,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -461,6 +484,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -479,6 +503,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -496,6 +521,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -514,6 +540,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -532,6 +559,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -549,6 +577,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -569,6 +598,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -585,7 +615,7 @@ namespace YouTube.Repository
                     {
                         String description = reader["DESCRIPTION"].ToString();
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         String videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = GetChannel(channelId);
@@ -606,6 +636,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -622,10 +653,86 @@ namespace YouTube.Repository
                     {
                         String description = reader["DESCRIPTION"].ToString();
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         String videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = GetChannel(channelId);
+                        int views = int.Parse(reader["VIEWS"].ToString());
+
+                        videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
+                    }
+                }
+            }
+
+            return videos;
+        }
+
+        public List<Video> GetPopularVideos(int amount)
+        {
+            List<Video> videos = new List<Video>();
+
+            var conn = new OracleConnection(connectionString);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"VIEWS\" DESC) WHERE ROWNUM <= :amount"
+                };
+                
+                command.Parameters.Add("amount", amount);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        String description = reader["DESCRIPTION"].ToString();
+                        String title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        int videoId = int.Parse(reader["VIDEOID"].ToString());
+                        String videoLink = reader["VIDEOLINK"].ToString();
+                        Channel creator = GetChannel(int.Parse(reader["CHANNELID"].ToString()));
+                        int views = int.Parse(reader["VIEWS"].ToString());
+
+                        videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
+                    }
+                }
+            }
+
+            return videos;
+        }
+
+        public List<Video> GetNewVideos(int amount)
+        {
+            List<Video> videos = new List<Video>();
+
+            var conn = new OracleConnection(connectionString);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
+                };
+                
+                command.Parameters.Add("amount", amount);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        String description = reader["DESCRIPTION"].ToString();
+                        String title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        int videoId = int.Parse(reader["VIDEOID"].ToString());
+                        String videoLink = reader["VIDEOLINK"].ToString();
+                        Channel creator = GetChannel(int.Parse(reader["CHANNELID"].ToString()));
                         int views = int.Parse(reader["VIEWS"].ToString());
 
                         videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
@@ -643,6 +750,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -653,7 +761,7 @@ namespace YouTube.Repository
                 command.Parameters.Add("email", email);
                 command.Parameters.Add("password", password);
 
-                if((int) command.ExecuteScalar() > 0)
+                if(int.Parse(command.ExecuteScalar().ToString()) > 0)
                 {
                     success = true;
                 }
@@ -670,6 +778,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
@@ -702,6 +811,7 @@ namespace YouTube.Repository
             var conn = new OracleConnection(connectionString);
             using (conn)
             {
+                conn.Open();
                 var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
