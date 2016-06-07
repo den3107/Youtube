@@ -1,87 +1,155 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using YouTube.Repository;
-using YouTube.RepositoryDAL;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Video.cs" company="YouTube">
+//     Copyright (c) YouTube. All rights reserved
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace YouTube.Types
 {
+    using System;
+    using System.Collections.Generic;
+    using Repository;
+    using RepositoryDAL;
+
+    /// <summary>
+    /// Video object</summary>
     public class Video
     {
-        public String Description { get; private set; }
-        public int DownVotes { get; private set; }
-        public String Title { get; private set; }
-        public DateTime UploadDate { get; private set; }
-        public int UpVotes { get; private set; }
-        public int VideoId { get; private set; }
-        public String VideoLink { get; private set; }
-        public int Views { get; private set; }
-        public Channel Creator { get; private set; }
-        public List<Comment> Comments { get; private set; }
-
+        /// <summary>
+        /// DAL for database access</summary>
         private DAL dal = new DAL(new OracleRepository());
 
-        public Video(String description, String title, DateTime uploadDate, int videoId, String videoLink, Channel creator, int downVotes = 0, int upVotes = 0, int views = 0, List<Comment> comments = null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Video"/> class.</summary>
+        /// <param name="description">Video's description</param>
+        /// <param name="title">Video's title</param>
+        /// <param name="uploadDate">Video's upload date</param>
+        /// <param name="videoId">Video's ID</param>
+        /// <param name="videoLink">Video's link</param>
+        /// <param name="creator">Video's creator</param>
+        /// <param name="downVotes">Video's down votes</param>
+        /// <param name="upVotes">Video's up votes</param>
+        /// <param name="views">Video's views</param>
+        /// <param name="comments">Video's comments</param>
+        public Video(string description, string title, DateTime uploadDate, int videoId, string videoLink, Channel creator, int downVotes = 0, int upVotes = 0, int views = 0, List<Comment> comments = null)
         {
-            Description = description;
-            Title = title;
-            UploadDate = uploadDate;
-            VideoId = videoId;
-            VideoLink = videoLink;
-            Creator = creator;
-            DownVotes = downVotes;
-            UpVotes = upVotes;
-            Views = views;
-            Comments = comments ?? new List<Comment>();
+            this.Description = description;
+            this.Title = title;
+            this.UploadDate = uploadDate;
+            this.VideoId = videoId;
+            this.VideoLink = videoLink;
+            this.Creator = creator;
+            this.DownVotes = downVotes;
+            this.UpVotes = upVotes;
+            this.Views = views;
+            this.Comments = comments ?? new List<Comment>();
         }
 
+        /// <summary>
+        /// Gets video's description</summary>
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets video's down votes</summary>
+        public int DownVotes { get; private set; }
+
+        /// <summary>
+        /// Gets video's title</summary>
+        public string Title { get; private set; }
+
+        /// <summary>
+        /// Gets video's upload date</summary>
+        public DateTime UploadDate { get; private set; }
+
+        /// <summary>
+        /// Gets video's up votes</summary>
+        public int UpVotes { get; private set; }
+
+        /// <summary>
+        /// Gets video's ID</summary>
+        public int VideoId { get; private set; }
+
+        /// <summary>
+        /// Gets video's link</summary>
+        public string VideoLink { get; private set; }
+
+        /// <summary>
+        /// Gets video's views</summary>
+        public int Views { get; private set; }
+
+        /// <summary>
+        /// Gets video's creator</summary>
+        public Channel Creator { get; private set; }
+
+        /// <summary>
+        /// Gets video's comments</summary>
+        public List<Comment> Comments { get; private set; }
+
+        /// <summary>
+        /// Adds comment to video.</summary>
+        /// <param name="comment">Comment to add</param>
         public void AddComment(Comment comment)
         {
-            dal.AddCommentToVideo(comment);
-            Comments.Add(comment);
+            this.dal.AddCommentToVideo(comment);
+            this.Comments.Add(comment);
         }
 
+        /// <summary>
+        /// Adds down vote to comment.</summary>
         public void AddDownVote()
         {
-            dal.AddDownVoteToVideo(VideoId);
-            DownVotes++;
+            this.dal.AddDownVoteToVideo(this.VideoId);
+            this.DownVotes++;
         }
 
+        /// <summary>
+        /// Adds up vote to comment.</summary>
         public void AddUpVote()
         {
-            dal.AddUpVoteToVideo(VideoId);
-            UpVotes++;
+            this.dal.AddUpVoteToVideo(this.VideoId);
+            this.UpVotes++;
         }
 
+        /// <summary>
+        /// Adds view to comment.</summary>
         public void AddView()
         {
-            dal.AddViewToVideo(VideoId);
-            Views++;
+            this.dal.AddViewToVideo(this.VideoId);
+            this.Views++;
         }
 
-        public void EditDescription(String description)
+        /// <summary>
+        /// Edits description of video.</summary>
+        /// <param name="description">New description</param>
+        public void EditDescription(string description)
         {
-            dal.EditDescriptionOfVideo(VideoId, description);
-            Description = description;
+            this.dal.EditDescriptionOfVideo(this.VideoId, description);
+            this.Description = description;
         }
 
-        public void EditTitle(String title)
+        /// <summary>
+        /// Edits title of video.</summary>
+        /// <param name="title">New title</param>
+        public void EditTitle(string title)
         {
-            dal.EditTitleOfVideo(VideoId, title);
-            Title = title;
+            this.dal.EditTitleOfVideo(this.VideoId, title);
+            this.Title = title;
         }
 
+        /// <summary>
+        /// Removes down vote from comment.</summary>
         public void RemoveDownVote()
         {
-            dal.RemoveDownVoteToVideo(VideoId);
-            DownVotes--;
+            this.dal.RemoveDownVoteFromVideo(this.VideoId);
+            this.DownVotes--;
         }
 
+        /// <summary>
+        /// Removes up vote from comment.</summary>
         public void RemoveUpVote()
         {
-            dal.RemoveUpVoteToVideo(VideoId);
-            UpVotes--;
+            this.dal.RemoveUpVoteFromVideo(this.VideoId);
+            this.UpVotes--;
         }
     }
 }

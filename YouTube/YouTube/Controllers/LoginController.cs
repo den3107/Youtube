@@ -1,33 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using YouTube.RepositoryDAL;
-using YouTube.Repository;
-using YouTube.Types;
+﻿//-----------------------------------------------------------------------
+// <copyright file="LoginController.cs" company="YouTube">
+//     Copyright (c) YouTube. All rights reserved
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace YouTube.Controllers
 {
+    using System.Web.Mvc;
+    using Repository;
+    using RepositoryDAL;
+    using Types;
+
+    /// <summary>
+    /// Controller for login page</summary>
     public class LoginController : Controller
     {
-        DAL dal = new DAL(new OracleRepository());
+        /// <summary>
+        /// DAL for database access</summary>
+        private DAL dal = new DAL(new OracleRepository());
 
-        // GET: Login
+        /// <summary>
+        /// Main action for loading page</summary>
+        /// <returns>
+        /// Returns the View to view</returns>
         public ActionResult Index()
         {
             ViewBag.LoginFailed = false;
-            if(Request.HttpMethod == "POST")
+            if (Request.HttpMethod == "POST")
             {
-                String email = Request["inputEmail"];
-                String password = Request["inputPassword"];
+                string email = Request["inputEmail"];
+                string password = Request["inputPassword"];
 
-                if(dal.ValidateLogin(email, password))
+                if (this.dal.ValidateLogin(email, password))
                 {
-                    User user = new User(email, dal.GetUserChannels(email));
-                    Session["LoggedInUser"] = user;
-                    user.SetActivechannel(0);
-                    Session["ActiveChannel"] = user.ActiveChannel;
+                    User user = new User(email, this.dal.GetUserChannels(email));
+                    this.Session["LoggedInUser"] = user;
+                    this.Session["ActiveChannel"] = user.ActiveChannel;
                     Response.Redirect("/", true);
                 }
                 else
@@ -35,7 +43,8 @@ namespace YouTube.Controllers
                     ViewBag.LoginFailed = false;
                 }
             }
-            return View();
+
+            return this.View();
         }
     }
 }
