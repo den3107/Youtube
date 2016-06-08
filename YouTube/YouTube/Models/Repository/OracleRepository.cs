@@ -11,8 +11,8 @@ namespace YouTube.Repository
 {
     public class OracleRepository : IRepository
     {
-        //private readonly String connectionString  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.0.15";
-        private readonly String connectionString = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=localhost";
+        //private readonly String connectionString  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128";
+        private readonly String connectionString = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99";
 
         private int GetUserId(string email)
         {
@@ -89,7 +89,7 @@ namespace YouTube.Repository
                         String description = reader["DESCRIPTION"].ToString();
                         int playlistId = int.Parse(reader["PLAYLISTID"].ToString());
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         Channel channel = GetChannel(channelId);
 
                         playlists.Add(new Playlist(description, playlistId, title, uploadDate, channel));
@@ -615,7 +615,7 @@ namespace YouTube.Repository
                     {
                         String description = reader["DESCRIPTION"].ToString();
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         String videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = GetChannel(channelId);
@@ -653,7 +653,7 @@ namespace YouTube.Repository
                     {
                         String description = reader["DESCRIPTION"].ToString();
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         String videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = GetChannel(channelId);
@@ -691,7 +691,7 @@ namespace YouTube.Repository
                     {
                         String description = reader["DESCRIPTION"].ToString();
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         String videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = GetChannel(int.Parse(reader["CHANNELID"].ToString()));
@@ -729,7 +729,7 @@ namespace YouTube.Repository
                     {
                         String description = reader["DESCRIPTION"].ToString();
                         String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         String videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = GetChannel(int.Parse(reader["CHANNELID"].ToString()));
