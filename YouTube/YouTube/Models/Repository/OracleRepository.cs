@@ -1,151 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using Oracle.ManagedDataAccess.Client;
-using YouTube.Types;
+﻿//-----------------------------------------------------------------------
+// <copyright file="OracleRepository.cs" company="YouTube">
+//     Copyright (c) YouTube. All rights reserved
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace YouTube.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Globalization;
+    using Oracle.ManagedDataAccess.Client;
+    using Types;
+
+    /// <summary>
+    /// Default Oracle database context</summary>
     public class OracleRepository : IRepository
     {
-        //private readonly String connectionString  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128";
-        private readonly String connectionString = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99";
+        /// <summary>
+        /// Connection string used to connect to database</summary>
+        //// private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.0.15";
+        private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=localhost";
 
-        private int GetUserId(string email)
-        {
-            var conn = new OracleConnection(connectionString);
-            using (conn)
-            {
-                conn.Open();
-                var command = new OracleCommand {
-                    Connection = conn,
-                    CommandType = CommandType.Text,
-                    CommandText =
-                        "SELECT \"USERID\" FROM \"USER\" WHERE \"EMAIL\" = :email"
-                };
-
-                command.Parameters.Add("email", email);
-                return int.Parse(command.ExecuteScalar().ToString());
-            }
-        }
-
-        private Channel GetChannel(int channelId)
-        {
-            Channel channel = null;
-
-            var conn = new OracleConnection(connectionString);
-            using (conn)
-            {
-                conn.Open();
-                var command = new OracleCommand {
-                    Connection = conn,
-                    CommandType = CommandType.Text,
-                    CommandText =
-                        "SELECT * FROM \"CHANNEL\" WHERE \"CHANNELID\" = :channelId"
-                };
-
-                command.Parameters.Add("channelId", channelId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        channelId = int.Parse(reader["CHANNELID"].ToString());
-                        String name = reader["NAME"].ToString();
-                        String about = reader["ABOUT"].ToString();
-
-                        channel = new Channel(about, channelId, name);
-                    }
-                }
-            }
-
-            return channel;
-        }
-
-        private List<Playlist> GetPlaylists(int channelId)
-        {
-            List<Playlist> playlists = new List<Playlist>();
-
-            var conn = new OracleConnection(connectionString);
-            using (conn)
-            {
-                conn.Open();
-                var command = new OracleCommand {
-                    Connection = conn,
-                    CommandType = CommandType.Text,
-                    CommandText =
-                        "SELECT * FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
-                };
-
-                command.Parameters.Add("channelId", channelId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        String description = reader["DESCRIPTION"].ToString();
-                        int playlistId = int.Parse(reader["PLAYLISTID"].ToString());
-                        String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
-                        Channel channel = GetChannel(channelId);
-
-                        playlists.Add(new Playlist(description, playlistId, title, uploadDate, channel));
-                    }
-                }
-            }
-
-            return playlists;
-        }
-
-        private List<Channel> GetSubscriptions(int channelId)
-        {
-            List<Channel> channels = new List<Channel>();
-
-            var conn = new OracleConnection(connectionString);
-            using (conn)
-            {
-                conn.Open();
-                var command = new OracleCommand {
-                    Connection = conn,
-                    CommandType = CommandType.Text,
-                    CommandText =
-                        "SELECT * FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
-                };
-
-                command.Parameters.Add("channelId", channelId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        String about = reader["ANOUT"].ToString();
-                        int channelIdSubscription = int.Parse(reader["CHANNELID"].ToString());
-                        String name = reader["TITLE"].ToString();
-
-                        channels.Add(new Channel(about, channelIdSubscription, name));
-                    }
-                }
-            }
-
-            return channels;
-        }
-
+        /// <summary>
+        /// Add channel to user.</summary>
+        /// <param name="email">Email of user</param>
+        /// <param name="channel">Channel to add</param>
         public void AddChannelToUser(string email, Channel channel)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
                         "INSERT INTO \"CHANNEL\"(\"USERID\", \"NAME\", \"ABOUT\") VALUES (:userID, :name, :about)"
                 };
-                command.Parameters.Add("userID", GetUserId(email));
+                command.Parameters.Add("userID", this.GetUserId(email));
                 command.Parameters.Add("name", channel.Name);
                 command.Parameters.Add("about", channel.About);
 
@@ -153,13 +47,17 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add comment to video (comment contains videoId).</summary>
+        /// <param name="comment">Comment to add to video</param>
         public void AddCommentToVideo(Comment comment)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -173,13 +71,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add down vote to comment.</summary>
+        /// <param name="commentId">CommentId to add down vote to</param>
+        /// <param name="videoId">VideoId comment is placed on</param>
         public void AddDownVoteToComment(int commentId, int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -192,13 +95,17 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add down vote to video.</summary>
+        /// <param name="videoId">VideoId to add down vote to</param>
         public void AddDownVoteToVideo(int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -210,13 +117,17 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add playlist to channel (playlist already contains channelId).</summary>
+        /// <param name="playlist">Playlist to add</param>
         public void AddPlaylistToChannel(Playlist playlist)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -230,13 +141,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add reply to comment (reply contains videoId).</summary>
+        /// <param name="commentId">CommentId to add reply to</param>
+        /// <param name="reply">Reply to add to comment</param>
         public void AddReplytoComment(int commentId, Comment reply)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -250,13 +166,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add subscription to channel.</summary>
+        /// <param name="channelId">ChannelId to add subscription to</param>
+        /// <param name="subscriptionId">ChannelId of subscription</param>
         public void AddSubscriptionToChannel(int channelId, int subscriptionId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -269,13 +190,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add up vote to comment.</summary>
+        /// <param name="commentId">CommentId to add up vote to</param>
+        /// <param name="videoId">VideoId comment is placed on</param>
         public void AddUpVoteToComment(int commentId, int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -288,13 +214,17 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add up vote to video.</summary>
+        /// <param name="videoId">VideoId to add up vote to</param>
         public void AddUpVoteToVideo(int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -306,13 +236,17 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add video to channel (video already contains channelId).</summary>
+        /// <param name="video">Video to add</param>
         public void AddVideoToChannel(Video video)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -327,13 +261,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add video to playlist.</summary>
+        /// <param name="playlistId">PlaylistId to add video to</param>
+        /// <param name="videoId">Video to add</param>
         public void AddVideoToPlaylist(int playlistId, int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -346,13 +285,17 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Add view to video.</summary>
+        /// <param name="videoId">VideoId to add view to</param>
         public void AddViewToVideo(int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -364,13 +307,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Change about of channel.</summary>
+        /// <param name="channelId">ChannelId who's about must change</param>
+        /// <param name="about">New about</param>
         public void EditAboutOfChannel(int channelId, string about)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -383,13 +331,19 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Edit content of comment.</summary>
+        /// <param name="commentId">CommentId to change content of</param>
+        /// <param name="videoId">VideoId comment was placed on</param>
+        /// <param name="content">New content</param>
         public void EditContentOfComment(int commentId, int videoId, string content)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -403,13 +357,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Change description of playlist.</summary>
+        /// <param name="playlistId">PlaylistId to change description of</param>
+        /// <param name="description">New description</param>
         public void EditDescriptionOfPlaylist(int playlistId, string description)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -422,13 +381,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Change description of video.</summary>
+        /// <param name="videoId">VideoId to change description of</param>
+        /// <param name="description">New description</param>
         public void EditDescriptionOfVideo(int videoId, string description)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -441,13 +405,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Change title of playlist.</summary>
+        /// <param name="playlistId">PlaylistId to change title of</param>
+        /// <param name="title">New title</param>
         public void EditTitleOfPlaylist(int playlistId, string title)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -460,13 +429,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Change title of video.</summary>
+        /// <param name="videoId">VideoId to change title of</param>
+        /// <param name="title">New description</param>
         public void EditTitleOfVideo(int videoId, string title)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -479,13 +453,18 @@ namespace YouTube.Repository
             }
         }
 
-        public void RemoveDownVoteToComment(int commentId, int videoId)
+        /// <summary>
+        /// Remove down vote from comment.</summary>
+        /// <param name="commentId">CommentId to remove down vote from</param>
+        /// <param name="videoId">VideoId comment is placed on</param>
+        public void RemoveDownVoteFromComment(int commentId, int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -498,13 +477,17 @@ namespace YouTube.Repository
             }
         }
 
-        public void RemoveDownVoteToVideo(int videoId)
+        /// <summary>
+        /// Remove down vote from video.</summary>
+        /// <param name="videoId">VideoId to remove down vote from</param>
+        public void RemoveDownVoteFromVideo(int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -516,13 +499,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Remove subscription from channel.</summary>
+        /// <param name="channelId">ChannelId who removes subscription</param>
+        /// <param name="subscriptionId">ChannelId of subscription</param>
         public void RemoveSubscriptionFromChannel(int channelId, int subscriptionId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -535,13 +523,18 @@ namespace YouTube.Repository
             }
         }
 
-        public void RemoveUpVoteToComment(int commentId, int videoId)
+        /// <summary>
+        /// Remove up vote from comment.</summary>
+        /// <param name="commentId">CommentId to remove up vote from</param>
+        /// <param name="videoId">VideoId comment is placed on</param>
+        public void RemoveUpVoteFromComment(int commentId, int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -554,13 +547,17 @@ namespace YouTube.Repository
             }
         }
 
-        public void RemoveUpVoteToVideo(int videoId)
+        /// <summary>
+        /// Remove up vote from video.</summary>
+        /// <param name="videoId">VideoId to remove up vote from</param>
+        public void RemoveUpVoteFromVideo(int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -572,13 +569,18 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Remove video to playlist.</summary>
+        /// <param name="playlistId">PlaylistId to add video to</param>
+        /// <param name="videoId">Video to remove</param>
         public void RemoveVideoFromPlaylist(int playlistId, int videoId)
         {
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -591,15 +593,22 @@ namespace YouTube.Repository
             }
         }
 
+        /// <summary>
+        /// Returns [amount] amount of most popular videos of [channelId].</summary>
+        /// <returns>
+        /// Returns [amount] amount of most popular videos of [channelId]</returns>
+        /// <param name="channelId">Channel to get videos from</param>
+        /// <param name="amount">Max amount of videos to get</param>
         public List<Video> GetPopularVideosOfChannel(int channelId, int amount)
         {
             List<Video> videos = new List<Video>();
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -613,15 +622,15 @@ namespace YouTube.Repository
                 {
                     while (reader.Read())
                     {
-                        String description = reader["DESCRIPTION"].ToString();
-                        String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        string description = reader["DESCRIPTION"].ToString();
+                        string title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
-                        String videoLink = reader["VIDEOLINK"].ToString();
-                        Channel creator = GetChannel(channelId);
+                        string videoLink = reader["VIDEOLINK"].ToString();
+                        Channel creator = this.GetChannel(channelId);
                         int views = int.Parse(reader["VIEWS"].ToString());
 
-                        videos.Add(new Video(description:description, title:title, uploadDate:uploadDate, videoId:videoId, videoLink:videoLink, creator:creator, views:views));
+                        videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
                     }
                 }
             }
@@ -629,15 +638,22 @@ namespace YouTube.Repository
             return videos;
         }
 
+        /// <summary>
+        /// Returns [amount] amount of newest videos of [channelId].</summary>
+        /// <returns>
+        /// Returns [amount] amount of newest videos of [channelId]</returns>
+        /// <param name="channelId">Channel to get videos from</param>
+        /// <param name="amount">Max amount of videos to get</param>
         public List<Video> GetNewVideosOfChannel(int channelId, int amount)
         {
             List<Video> videos = new List<Video>();
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -651,12 +667,12 @@ namespace YouTube.Repository
                 {
                     while (reader.Read())
                     {
-                        String description = reader["DESCRIPTION"].ToString();
-                        String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        string description = reader["DESCRIPTION"].ToString();
+                        string title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
-                        String videoLink = reader["VIDEOLINK"].ToString();
-                        Channel creator = GetChannel(channelId);
+                        string videoLink = reader["VIDEOLINK"].ToString();
+                        Channel creator = this.GetChannel(channelId);
                         int views = int.Parse(reader["VIEWS"].ToString());
 
                         videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
@@ -667,11 +683,16 @@ namespace YouTube.Repository
             return videos;
         }
 
+        /// <summary>
+        /// Returns [amount] amount of most popular videos.</summary>
+        /// <returns>
+        /// Returns [amount] amount of most popular videos</returns>
+        /// <param name="amount">Max amount of videos to get</param>
         public List<Video> GetPopularVideos(int amount)
         {
             List<Video> videos = new List<Video>();
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
@@ -689,12 +710,12 @@ namespace YouTube.Repository
                 {
                     while (reader.Read())
                     {
-                        String description = reader["DESCRIPTION"].ToString();
-                        String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        string description = reader["DESCRIPTION"].ToString();
+                        string title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
-                        String videoLink = reader["VIDEOLINK"].ToString();
-                        Channel creator = GetChannel(int.Parse(reader["CHANNELID"].ToString()));
+                        string videoLink = reader["VIDEOLINK"].ToString();
+                        Channel creator = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
                         int views = int.Parse(reader["VIEWS"].ToString());
 
                         videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
@@ -705,11 +726,16 @@ namespace YouTube.Repository
             return videos;
         }
 
+        /// <summary>
+        /// Returns [amount] amount of most popular videos.</summary>
+        /// <returns>
+        /// Returns [amount] amount of most popular videos</returns>
+        /// <param name="amount">Max amount of videos to get</param>
         public List<Video> GetNewVideos(int amount)
         {
             List<Video> videos = new List<Video>();
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
@@ -727,12 +753,12 @@ namespace YouTube.Repository
                 {
                     while (reader.Read())
                     {
-                        String description = reader["DESCRIPTION"].ToString();
-                        String title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        string description = reader["DESCRIPTION"].ToString();
+                        string title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
-                        String videoLink = reader["VIDEOLINK"].ToString();
-                        Channel creator = GetChannel(int.Parse(reader["CHANNELID"].ToString()));
+                        string videoLink = reader["VIDEOLINK"].ToString();
+                        Channel creator = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
                         int views = int.Parse(reader["VIEWS"].ToString());
 
                         videos.Add(new Video(description: description, title: title, uploadDate: uploadDate, videoId: videoId, videoLink: videoLink, creator: creator, views: views));
@@ -743,15 +769,22 @@ namespace YouTube.Repository
             return videos;
         }
 
-        public bool ValidateLogin(String email, String password)
+        /// <summary>
+        /// Validate credentials of login attempt.</summary>
+        /// <returns>
+        /// Returns if credentials are valid</returns>
+        /// <param name="email">Email to check</param>
+        /// <param name="password">Password to check</param>
+        public bool ValidateLogin(string email, string password)
         {
             bool success = false;
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -761,7 +794,7 @@ namespace YouTube.Repository
                 command.Parameters.Add("email", email);
                 command.Parameters.Add("password", password);
 
-                if(int.Parse(command.ExecuteScalar().ToString()) > 0)
+                if (int.Parse(command.ExecuteScalar().ToString()) > 0)
                 {
                     success = true;
                 }
@@ -770,16 +803,22 @@ namespace YouTube.Repository
             return success;
         }
 
-        public List<Channel> GetUserChannels(String email)
+        /// <summary>
+        /// Get basic info of all the channels of user.</summary>
+        /// <returns>
+        /// Returns basic info of all channels of user</returns>
+        /// <param name="email">Email of user</param>
+        public List<Channel> GetUserChannels(string email)
         {
             List<Channel> channels = new List<Channel>();
-            int userId = GetUserId(email);
+            int userId = this.GetUserId(email);
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -793,8 +832,8 @@ namespace YouTube.Repository
                     while (reader.Read())
                     {
                         int channelId = int.Parse(reader["CHANNELID"].ToString());
-                        String name = reader["NAME"].ToString();
-                        String about = reader["ABOUT"].ToString();
+                        string name = reader["NAME"].ToString();
+                        string about = reader["ABOUT"].ToString();
 
                         channels.Add(new Channel(about, channelId, name));
                     }
@@ -804,15 +843,21 @@ namespace YouTube.Repository
             return channels;
         }
 
+        /// <summary>
+        /// Get full info of channel.</summary>
+        /// <returns>
+        /// Returns full info of channel</returns>
+        /// <param name="channelId">ChannelId of channel</param>
         public Channel GetFullChannel(int channelId)
         {
             Channel channel = null;
 
-            var conn = new OracleConnection(connectionString);
+            var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -825,18 +870,161 @@ namespace YouTube.Repository
                 {
                     while (reader.Read())
                     {
-                        String name = reader["NAME"].ToString();
-                        String about = reader["ABOUT"].ToString();
+                        string name = reader["NAME"].ToString();
+                        string about = reader["ABOUT"].ToString();
 
-                        List<Playlist> playlists = GetPlaylists(channelId);
-                        List<Channel> subscriptions = GetSubscriptions(channelId);
+                        List<Playlist> playlists = this.GetPlaylists(channelId);
+                        List<Channel> subscriptions = this.GetSubscriptions(channelId);
 
-                        channel = new Channel(about:about, channelId:channelId, name:name, playlists:playlists, subscriptions:subscriptions);
+                        channel = new Channel(about: about, channelId: channelId, name: name, playlists: playlists, subscriptions: subscriptions);
                     }
                 }
             }
 
             return channel;
+        }
+
+        /// <summary>
+        /// Get userId from email.</summary>
+        /// <returns>
+        /// Returns UserId</returns>
+        /// <param name="email">Email of user</param>
+        private int GetUserId(string email)
+        {
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT \"USERID\" FROM \"USER\" WHERE \"EMAIL\" = :email"
+                };
+
+                command.Parameters.Add("email", email);
+                return int.Parse(command.ExecuteScalar().ToString());
+            }
+        }
+
+        /// <summary>
+        /// Get basic info of channel.</summary>
+        /// <returns>
+        /// Returns basic info of channel</returns>
+        /// <param name="channelId">ChannelId to get info of</param>
+        private Channel GetChannel(int channelId)
+        {
+            Channel channel = null;
+
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT * FROM \"CHANNEL\" WHERE \"CHANNELID\" = :channelId"
+                };
+
+                command.Parameters.Add("channelId", channelId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        channelId = int.Parse(reader["CHANNELID"].ToString());
+                        string name = reader["NAME"].ToString();
+                        string about = reader["ABOUT"].ToString();
+
+                        channel = new Channel(about, channelId, name);
+                    }
+                }
+            }
+
+            return channel;
+        }
+
+        /// <summary>
+        /// Get playlists of channel.</summary>
+        /// <returns>
+        /// Returns playlists of channel</returns>
+        /// <param name="channelId">ChannelId to get playlists of</param>
+        private List<Playlist> GetPlaylists(int channelId)
+        {
+            List<Playlist> playlists = new List<Playlist>();
+
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT * FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
+                };
+
+                command.Parameters.Add("channelId", channelId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string description = reader["DESCRIPTION"].ToString();
+                        int playlistId = int.Parse(reader["PLAYLISTID"].ToString());
+                        string title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        Channel channel = this.GetChannel(channelId);
+
+                        playlists.Add(new Playlist(description, playlistId, title, uploadDate, channel));
+                    }
+                }
+            }
+
+            return playlists;
+        }
+
+        /// <summary>
+        /// Get subscriptions of channel.</summary>
+        /// <returns>
+        /// Returns subscriptions of channel</returns>
+        /// <param name="channelId">ChannelId to get subscriptions of</param>
+        private List<Channel> GetSubscriptions(int channelId)
+        {
+            List<Channel> channels = new List<Channel>();
+
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT * FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
+                };
+
+                command.Parameters.Add("channelId", channelId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string about = reader["ANOUT"].ToString();
+                        int channelIdSubscription = int.Parse(reader["CHANNELID"].ToString());
+                        string name = reader["TITLE"].ToString();
+
+                        channels.Add(new Channel(about, channelIdSubscription, name));
+                    }
+                }
+            }
+
+            return channels;
         }
     }
 }

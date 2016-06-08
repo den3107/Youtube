@@ -102,7 +102,7 @@
                         List<Video> videos = ViewBag.popularVideos as List<Video>;
                         foreach (Video video in videos)
                         {
-                            String videoLink = "https://i.ytimg.com/vi/"+video.VideoLink+"/0.jpg";
+                            string videoLink = "https://i.ytimg.com/vi/"+video.VideoLink+"/0.jpg";
                             <div class="thumbnail">
                                 <img src="@videoLink" />
                                 <div class="caption">
