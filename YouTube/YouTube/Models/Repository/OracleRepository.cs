@@ -657,7 +657,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"CHANNELID\" = :channelId AND \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" V WHERE \"CHANNELID\" = :channelId AND \"VIDEOTYPE\" = 'RECORDED' ORDER BY V.\"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
                 };
 
                 command.Parameters.Add("channelId", channelId);
@@ -744,7 +744,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" V WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY V.\"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
                 };
                 
                 command.Parameters.Add("amount", amount);
@@ -1006,7 +1006,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
+                        "SELECT * FROM \"CHANNEL\" WHERE \"CHANNELID\" IN (SELECT \"SUBSCRIBEDID\" FROM \"SUBSCRIBER\" WHERE \"CHANNELID\" = :channelId)"
                 };
 
                 command.Parameters.Add("channelId", channelId);
@@ -1015,9 +1015,9 @@ namespace YouTube.Repository
                 {
                     while (reader.Read())
                     {
-                        string about = reader["ANOUT"].ToString();
+                        string about = reader["ABOUT"].ToString();
                         int channelIdSubscription = int.Parse(reader["CHANNELID"].ToString());
-                        string name = reader["TITLE"].ToString();
+                        string name = reader["NAME"].ToString();
 
                         channels.Add(new Channel(about, channelIdSubscription, name));
                     }

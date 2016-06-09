@@ -23,25 +23,26 @@ namespace YouTube.Controllers
         /// Main action for loading page</summary>
         /// <returns>
         /// Returns the View to view</returns>
+        [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.LoginFailed = false;
-            if (Request.HttpMethod == "POST")
-            {
-                string email = Request["inputEmail"];
-                string password = Request["inputPassword"];
+            return this.View();
+        }
 
-                if (this.dal.ValidateLogin(email, password))
-                {
-                    User user = new User(email, this.dal.GetUserChannels(email));
-                    this.Session["LoggedInUser"] = user;
-                    this.Session["ActiveChannel"] = user.ActiveChannel;
-                    Response.Redirect("/", true);
-                }
-                else
-                {
-                    ViewBag.LoginFailed = false;
-                }
+        [HttpPost]
+        public ActionResult Index(string inputEmail, string inputPassword)
+        {
+            ViewBag.LoginFailed = false;
+            if (this.dal.ValidateLogin(inputEmail, inputPassword))
+            {
+                User user = new User(inputEmail, this.dal.GetUserChannels(inputEmail));
+                this.Session["LoggedInUser"] = user;
+                this.Session["ActiveChannel"] = user.ActiveChannel;
+                Response.Redirect("/", true);
+            }
+            else
+            {
+                ViewBag.LoginFailed = false;
             }
 
             return this.View();

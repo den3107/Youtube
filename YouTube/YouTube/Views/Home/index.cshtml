@@ -46,9 +46,22 @@
                     // Logged in
                     User loggedInUser = Session["LoggedInUser"] as User;
                     Channel channel = Session["ActiveChannel"] as Channel;
+                    <label>Logged in as @channel.Name</label>
                     <a href="/upload" class="btn btn-default" role="button">Upload</a>
-                    <a href="/channel/@channel.ChannelId" class="btn btn-default" role="button">@channel.Name</a>
-                    <a href="/channels?user=@loggedInUser.Email" class="btn btn-default" role="button">Change Channel</a>
+                    if (loggedInUser.Channels.Count > 1)
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Change channel <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach (Channel c in loggedInUser.Channels)
+                                {
+                                    <li><a href="/?newChannel=@c.Name">@if (c.Name == channel.Name) { <i class="glyphicon glyphicon-check"></i> }@c.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 }
                 else
                 {
@@ -59,6 +72,7 @@
             <!-- End login -->
         </div>
     </nav>
+    <!-- End header -->
     <div class="container">
         <div class="sidebar collapse">
             <div class="sidebar-content">
@@ -100,11 +114,12 @@
                 <div class="row">
                     @{
                         List<Video> videos = ViewBag.popularVideos as List<Video>;
+                        // Clear duplicate videos
+                        videos = videos.GroupBy(x => x.VideoId).Select(x => x.First()).ToList();
                         foreach (Video video in videos)
                         {
-                            string videoLink = "https://i.ytimg.com/vi/"+video.VideoLink+"/0.jpg";
                             <div class="thumbnail">
-                                <img src="@videoLink" />
+                                <img src="https://i.ytimg.com/vi/@video.VideoLink/0.jpg" />
                                 <div class="caption">
                                     <a href="/watch?v=@video.VideoLink">@video.Title</a><br>
                                     <span><a href="/channel/@video.Creator.ChannelId">@video.Creator.Name</a></span><br>
@@ -122,17 +137,19 @@
                     Channel channel = Session["ActiveChannel"] as Channel;
                     foreach(Channel subscription in channel.Subscriptions)
                     {
-                        List<Video> suggestedVideos = subscription.GetNewVideos(3);
-                        suggestedVideos.AddRange(subscription.GetPopularVideos(3));
+                        List<Video> suggestedVideos = subscription.GetNewVideos(1);
+                        suggestedVideos.AddRange(subscription.GetPopularVideos(1));
+                        // Clear duplicate videos
+                        suggestedVideos = suggestedVideos.GroupBy(x => x.VideoId).Select(x => x.First()).ToList();
                         if (suggestedVideos.Count > 0)
                         {
                             <hr>
-                            <span class="title">Bow before the unicorns</span>
+                            <span class="title">@subscription.Name</span>
                             <div class="row">
                             @foreach (Video video in suggestedVideos)
                             {
                                 <div class="thumbnail">
-                                    <img src="https://i.ytimg.com/vi/@video.VideoLink" />
+                                    <img src="https://i.ytimg.com/vi/@video.VideoLink/0.jpg" />
                                     <div class="caption">
                                         <a href="/watch?v=@video.VideoLink">@video.Title</a><br>
                                         <span><a href="/channel/@video.Creator.ChannelId">@video.Creator.Name</a></span><br>

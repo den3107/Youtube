@@ -21,15 +21,30 @@ namespace YouTube.Controllers
         private DAL dal = new DAL(new OracleRepository());
 
         /// <summary>
-        /// Main action for loading page</summary>
+        /// Action for loading page, optionally changing active channel to newChannel</summary>
         /// <returns>
         /// Returns the View to view</returns>
-        public ActionResult Index()
+        /// <param name="newChannel">Channel name to set active</param>
+        public ActionResult Index(string newChannel = null)
         {
             List<Video> popularVideos = new List<Video>();
             popularVideos.AddRange(this.dal.GetPopularVideos(4));
             popularVideos.AddRange(this.dal.GetNewVideos(2));
             ViewBag.popularVideos = popularVideos;
+
+            if (Session["LoggedInUser"] != null && newChannel != null)
+            {
+                User user = Session["LoggedInUser"] as User;
+                for (int i = 0; i < user.Channels.Count; i++)
+                {
+                    if (user.Channels[i].Name == newChannel)
+                    {
+                        user.SetActivechannel(i);
+                        Session["ActiveChannel"] = user.ActiveChannel;
+                        break;
+                    }
+                }
+            }
 
             return this.View();
         }
