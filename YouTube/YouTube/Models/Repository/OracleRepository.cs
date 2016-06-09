@@ -19,8 +19,8 @@ namespace YouTube.Repository
     {
         /// <summary>
         /// Connection string used to connect to database</summary>
-        //// private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.0.15";
-        private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=localhost";
+        ////private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99"; //// When publishing to INFRA
+        private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128"; //// For local testing
 
         /// <summary>
         /// Add channel to user.</summary>
@@ -612,7 +612,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"CHANNELID\" = :channelId AND \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"VIEWS\" DESC) WHERE ROWNUM <= :amount"
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"CHANNELID\" = :channelId AND \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"VIEWS\" DESC) WHERE ROWNUM <= :amount"
                 };
 
                 command.Parameters.Add("channelId", channelId);
@@ -624,7 +624,7 @@ namespace YouTube.Repository
                     {
                         string description = reader["DESCRIPTION"].ToString();
                         string title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         string videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = this.GetChannel(channelId);
@@ -657,7 +657,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"CHANNELID\" = :channelId AND \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"CHANNELID\" = :channelId AND \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
                 };
 
                 command.Parameters.Add("channelId", channelId);
@@ -669,7 +669,7 @@ namespace YouTube.Repository
                     {
                         string description = reader["DESCRIPTION"].ToString();
                         string title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         string videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = this.GetChannel(channelId);
@@ -701,7 +701,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"VIEWS\" DESC) WHERE ROWNUM <= :amount"
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"VIEWS\" DESC) WHERE ROWNUM <= :amount"
                 };
                 
                 command.Parameters.Add("amount", amount);
@@ -712,7 +712,7 @@ namespace YouTube.Repository
                     {
                         string description = reader["DESCRIPTION"].ToString();
                         string title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         string videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
@@ -744,7 +744,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
+                        "SELECT * FROM (SELECT DESCRIPTION, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, VIDEOID, VIDEOLINK, CHANNELID, VIEWS FROM \"VIDEO\" WHERE \"VIDEOTYPE\" = 'RECORDED' ORDER BY \"UPLOADDATE\" DESC) WHERE ROWNUM <= :amount"
                 };
                 
                 command.Parameters.Add("amount", amount);
@@ -755,7 +755,7 @@ namespace YouTube.Repository
                     {
                         string description = reader["DESCRIPTION"].ToString();
                         string title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         int videoId = int.Parse(reader["VIDEOID"].ToString());
                         string videoLink = reader["VIDEOLINK"].ToString();
                         Channel creator = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
@@ -965,7 +965,7 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT * FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
+                        "SELECT DESCRIPTION, PLAYLISTID, TITLE, TO_CHAR(UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE FROM \"PLAYLIST\" WHERE \"CHANNELID\" = :channelId"
                 };
 
                 command.Parameters.Add("channelId", channelId);
@@ -977,7 +977,7 @@ namespace YouTube.Repository
                         string description = reader["DESCRIPTION"].ToString();
                         int playlistId = int.Parse(reader["PLAYLISTID"].ToString());
                         string title = reader["TITLE"].ToString();
-                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "yy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         Channel channel = this.GetChannel(channelId);
 
                         playlists.Add(new Playlist(description, playlistId, title, uploadDate, channel));
