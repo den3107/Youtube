@@ -29,6 +29,12 @@ namespace YouTube.Controllers
             return this.View();
         }
 
+        /// <summary>
+        /// Action to process the login request</summary>
+        /// <returns>
+        /// Returns the View to view</returns>
+        /// <param name="inputEmail">Input email</param>
+        /// <param name="inputPassword">Input password</param>
         [HttpPost]
         public ActionResult Index(string inputEmail, string inputPassword)
         {
@@ -38,7 +44,7 @@ namespace YouTube.Controllers
                 User user = new User(inputEmail, this.dal.GetUserChannels(inputEmail));
                 this.Session["LoggedInUser"] = user;
                 this.Session["ActiveChannel"] = user.ActiveChannel;
-                Response.Redirect("/", true);
+                Response.Redirect("./", true);
             }
             else
             {

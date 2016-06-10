@@ -19,8 +19,8 @@ namespace YouTube.Repository
     {
         /// <summary>
         /// Connection string used to connect to database</summary>
-        ////private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99"; //// When publishing to INFRA
-        private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128"; //// For local testing
+        private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99"; //// When publishing to INFRA
+        ////private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128"; //// For local testing
 
         /// <summary>
         /// Add channel to user.</summary>

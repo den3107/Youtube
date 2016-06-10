@@ -32,7 +32,7 @@ namespace YouTube.Controllers
             popularVideos.AddRange(this.dal.GetNewVideos(2));
             ViewBag.popularVideos = popularVideos;
 
-            if (Session["LoggedInUser"] != null && newChannel != null)
+            if (this.Session["LoggedInUser"] != null && newChannel != null)
             {
                 User user = Session["LoggedInUser"] as User;
                 for (int i = 0; i < user.Channels.Count; i++)
@@ -40,7 +40,7 @@ namespace YouTube.Controllers
                     if (user.Channels[i].Name == newChannel)
                     {
                         user.SetActivechannel(i);
-                        Session["ActiveChannel"] = user.ActiveChannel;
+                        this.Session["ActiveChannel"] = user.ActiveChannel;
                         break;
                     }
                 }
