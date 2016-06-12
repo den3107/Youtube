@@ -44,7 +44,7 @@ namespace YouTube.Controllers
                     {
                         user.SetActivechannel(i);
                         this.Session["ActiveChannel"] = user.ActiveChannel;
-                        return RedirectToAction("Index", "home"); // Redirect back to here, only without the parameter
+                        return this.RedirectToAction("Index", "home"); // Redirect back to here, only without the parameter
                     }
                 }
             }

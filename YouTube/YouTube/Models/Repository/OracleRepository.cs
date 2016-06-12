@@ -978,7 +978,8 @@ namespace YouTube.Repository
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -1157,7 +1158,7 @@ namespace YouTube.Repository
         /// <returns>
         /// Returns replies placed on comment</returns>
         /// <param name="videoId">VideoId to get comments of</param>
-        /// <param name="commentId">CommentId to get replies from</param>
+        /// <param name="commentIdIn">CommentId to get replies from</param>
         private List<Comment> GetReplies(int videoId, int commentIdIn)
         {
             List<Comment> replies = new List<Comment>();
@@ -1166,7 +1167,8 @@ namespace YouTube.Repository
             using (conn)
             {
                 conn.Open();
-                var command = new OracleCommand {
+                var command = new OracleCommand
+                {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =

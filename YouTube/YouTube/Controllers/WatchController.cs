@@ -61,7 +61,7 @@ namespace YouTube.Controllers
             // Add subscription
             channel.AddSubscription(this.dal.GetChannel(channelId));
 
-            return RedirectToAction("Index", new { v = v });
+            return this.RedirectToAction("Index", new { v = v });
         }
 
         /// <summary>
@@ -75,16 +75,16 @@ namespace YouTube.Controllers
             Channel channel = Session["ActiveChannel"] as Channel;
 
             // Look for subscription with given ID
-            for(int i = 0; i < channel.Subscriptions.Count; i++)
+            for (int i = 0; i < channel.Subscriptions.Count; i++)
             {
-                if(channel.Subscriptions[i].ChannelId == channelId)
+                if (channel.Subscriptions[i].ChannelId == channelId)
                 {
                     // remove found subscription
                     channel.RemoveSubscription(channel.Subscriptions[i]);
                 }
             }
             
-            return RedirectToAction("Index", new { v = v });
+            return this.RedirectToAction("Index", new { v = v });
         }
     }
 }
