@@ -83,6 +83,55 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="fd52789d-86cb-40b7-b3ce-5b3a256e63df"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName="ActiveChannel"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="fea66ce7-5b67-43e3-a265-34692614946c"
+              LastKnownName="Channel"
+              LastKnownLocation="Package_1434.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fdfea1bb-0c62-4c93-a5ae-13ad4b795975"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="260dd921-15a0-4b73-9c8f-7614b9e20067"
+                      name="Lower" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="76ae10e5-3e92-44b5-8fa0-1411fad044de"
+                      name="Upper" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="538712b2-813f-402c-beee-ea77621bb36e"
+                  name="ActiveChannel"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
         <ownedAttributesInternal>
           <property
@@ -90,7 +139,7 @@
             name="Email"
             isLeaf="false"
             isStatic="false"
-            isReadOnly="false"
+            isReadOnly="true"
             isUnique="false"
             isDerived="false"
             isDerivedUnion="false"
@@ -124,6 +173,63 @@
                     <undefinedTypeMoniker
                       Id="1a9d2f37-6be9-4d1e-808c-6df81e838919"
                       LastKnownName="Channel"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4c013bc7-d030-4a4d-b848-f89bf197aff5"
+            name="User"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="81f166d5-e980-4763-ab3f-d03ee59c102c"
+                  name="email"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c658a893-d58f-4a4c-8fec-f430b1de7ec2"
+                  name="channels List&lt;Channel&gt;"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="54a3e085-6627-450a-ade1-50597d47cd6e"
+            name="SetActiveChannel"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="efe91144-5824-4ee0-b3d9-ce935c249aed"
+                  name="index"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="456affeb-5450-484a-8b66-4afa2d4450da"
+                      LastKnownName="int"
                       LastKnownLocation="Package_1434.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -321,6 +427,68 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="81abc7cd-1558-41ee-9cc3-e25eb94322ac"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName="Subscriptions"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="fea66ce7-5b67-43e3-a265-34692614946c"
+              LastKnownName="Channel"
+              LastKnownLocation="Package_1434.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6de010b3-39eb-4b98-a3ba-ef9435f180ab"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="c65c9999-b7ed-4a1d-bb55-5a91c808b832"
+                      name="Lower" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="01276f0a-2e93-42a1-80e0-4410d3a67f1b"
+                      name="Upper" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a309b8df-52f7-421a-b029-eb27b15361f4"
+                  name="Subscriptions"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0f9cf6c1-4981-4cc8-b427-1a4d9d90f290"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="d076a5ad-b719-45d8-9fe0-3166bbf45771"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
         <ownedAttributesInternal>
           <property
@@ -482,39 +650,6 @@
             </ownedParameters>
           </operation>
           <operation
-            Id="d1a581c4-f348-406e-abda-02fee93fadff"
-            name="StartLivestream"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="e5db826b-ff6f-49dc-a65f-1b591bc80a9a"
-                  name="livestream"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="49eb071b-8aaf-4c7f-8c18-67d6d16a4ed1"
-                      LastKnownName="Livestream"
-                      LastKnownLocation="Package_1434.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="8f5d03c1-d899-4458-b861-fad10784ec88"
-            name="EndLivestream"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
             Id="646a1cbd-9e5f-442d-9168-7051a7bf358a"
             name="EditAbout"
             isLeaf="false"
@@ -534,6 +669,163 @@
                       Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
                       LastKnownName="String"
                       LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b94734c3-4e72-4c4c-9c18-09a68e044fe7"
+            name="Channel"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="538e074f-db3f-4708-a2ef-d6ecb789f19c"
+                  name="about"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1028ef74-baaa-478e-974b-2b6909160c1f"
+                  name="channelId"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e5e9cecb-2fc4-43db-9a62-f78056dedcda"
+                  name="Integer"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6e194bfc-0c50-473e-bc06-81420e574198"
+                  name="name String"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="586f4aed-90e3-4c53-82d8-136f5b2994b8"
+                  name="playlists"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="8f7e1fd1-e7c7-42dc-b318-94ae7c387373"
+                      LastKnownName="List&lt;Playlist&gt;"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fc4d37a6-4db5-4d83-820c-bfa61b85a07b"
+                  name="videos"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="1a1ed43e-b447-45a1-94ea-84d9f6474c6e"
+                      LastKnownName="List&lt;Video&gt;"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="812fcfbf-83c0-413f-b127-f8a8ee293101"
+                  name="subscriptions List&lt;Channel&gt;"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="019f77f2-c801-4846-99c6-1202f0029ce8"
+            name="GetPopularVideos"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="275e595d-cfdb-49de-a110-4d7bd18137ee"
+                  name="amount"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1244e319-f46d-473f-9cb3-670972dfa309"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="1a1ed43e-b447-45a1-94ea-84d9f6474c6e"
+                      LastKnownName="List&lt;Video&gt;"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="f8e3ece8-dc9f-4aaa-9444-fdee7fb69329"
+            name="GetNewVideos"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="21c2a60c-e79c-4838-b8b6-1bebe152cced"
+                  name="amount"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c62aee3d-3d70-4442-99ee-095f7682e64c"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="1a1ed43e-b447-45a1-94ea-84d9f6474c6e"
+                      LastKnownName="List&lt;Video&gt;"
+                      LastKnownLocation="Package_1434.uml" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -763,106 +1055,6 @@
             </ownedParameters>
           </operation>
           <operation
-            Id="a1d86ede-b6f7-4085-ab3b-3756c2091f28"
-            name="MoveDown"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="2fc777cc-b47a-4056-8cbf-61eead3b0111"
-                  name="video"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="ed008eef-a40e-4e5f-91ff-8ffd9f522148"
-                      LastKnownName="Video"
-                      LastKnownLocation="Package_1434.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="6747aa0a-4a0f-45d1-af2f-5c6d4cda6698"
-            name="MoveDown"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="9938ae49-a6f3-4738-8e3b-ac14834dee3a"
-                  name="index"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <primitiveTypeMoniker
-                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
-                      LastKnownName="Integer"
-                      LastKnownLocation="ModelingProject.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="917f50ad-4b04-41b5-9812-007d4685fd11"
-            name="MoveUP"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="fae31995-8839-4cd7-abcf-d43e01d802f0"
-                  name="video"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="ed008eef-a40e-4e5f-91ff-8ffd9f522148"
-                      LastKnownName="Video"
-                      LastKnownLocation="Package_1434.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="fe7b89ba-ba61-44b3-ba72-5560eba327a7"
-            name="MoveUp"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="ccaf447c-d77d-413a-aa1b-f570c888aae3"
-                  name="index"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <primitiveTypeMoniker
-                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
-                      LastKnownName="Integer"
-                      LastKnownLocation="ModelingProject.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
             Id="6e6f1f72-5143-49c0-9bad-f3b5f5f6bbaa"
             name="EditDescription"
             isLeaf="false"
@@ -907,6 +1099,101 @@
                       Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
                       LastKnownName="String"
                       LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4e249f89-fff8-4b93-8ffe-9b75a90c2158"
+            name="Playlist"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="52bf887d-c35c-4ee5-b467-7efc7d842f22"
+                  name="description"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f7e1a6be-ebee-4845-b75e-5a6ad1703605"
+                  name="playlistId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dab13b12-675e-4c9d-b4f1-e1e22b9c67ba"
+                  name="title"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e92af5c4-772c-46b8-855f-6c001912fb5e"
+                  name="uploadDate"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="769a42c6-0e5d-4c2f-8abc-14120430c915"
+                      LastKnownName="DateTime"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="70028e36-d6b3-4c01-b41e-ad8653ef61f6"
+                  name="creator"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fea66ce7-5b67-43e3-a265-34692614946c"
+                      LastKnownName="Channel"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6a05dfa5-6215-4ba0-87ee-a5b66b56b597"
+                  name="videos"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="1a1ed43e-b447-45a1-94ea-84d9f6474c6e"
+                      LastKnownName="List&lt;Video&gt;"
+                      LastKnownLocation="Package_1434.uml" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1256,6 +1543,157 @@
                     <classMoniker
                       Id="1b13a381-0cd1-465d-92ae-f059294c52cf"
                       LastKnownName="Comment"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6fe5fe7a-53d8-4244-9543-37082b209142"
+            name="Video"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c21ca0b3-5ca7-4d6b-81d3-6f67ce344b63"
+                  name="description"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9f8098c6-4763-44a3-b0f9-f25e28544745"
+                  name="title"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5894da4f-5511-4107-bae3-f96284a410dd"
+                  name="uploadDate"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="769a42c6-0e5d-4c2f-8abc-14120430c915"
+                      LastKnownName="DateTime"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="56ffe451-3424-4527-bd90-2c1fa2eb3f37"
+                  name="videoId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6da3af72-69d7-4b49-a74d-ccd8217b4738"
+                  name="videoLink"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ea958f6a-e910-4e56-816d-4f0f002f8576"
+                  name="creator"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fea66ce7-5b67-43e3-a265-34692614946c"
+                      LastKnownName="Channel"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="88ebb8eb-588e-4e4f-93dc-eb7f060677cb"
+                  name="downVotes"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c54497bb-5949-4383-a343-d2fd34813692"
+                  name="upVotes"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8f212d05-da70-483d-ac64-824409562422"
+                  name="views"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="19046d33-1c9f-4354-9cc0-b7043b95e768"
+                  name="comments"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d1234dbf-3051-430c-a451-d75f543bcdf0"
+                      LastKnownName="List&lt;Comment&gt;"
                       LastKnownLocation="Package_1434.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -1615,6 +2053,143 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation
+            Id="756df402-3ade-489f-9a27-e5ceefd5125a"
+            name="Comment"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a2f8c5fc-176d-43a7-b9d0-989116059711"
+                  name="commentId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="45451ef1-d383-4c09-a656-d9daf3646e87"
+                  name="content"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1282c67b-7222-4e4b-a88b-11ce8c994806"
+                  name="uploadDate"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="769a42c6-0e5d-4c2f-8abc-14120430c915"
+                      LastKnownName="DateTime"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c768c5bf-96a5-42fb-854e-e2571248fb22"
+                  name="author"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fea66ce7-5b67-43e3-a265-34692614946c"
+                      LastKnownName="Channel"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6a6d4e6b-9d20-4cd7-9d3d-bff57fe297ea"
+                  name="videoId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ed489f33-227e-40f4-9420-e0c76ea4e7d9"
+                  name="downVotes"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="82217e50-4afa-4705-8eb4-2b15db8f1c73"
+                  name="isReply"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b834967c-c9aa-49f3-b7f2-302cd41df9f9"
+                  name="upVotes"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3fffd8fa-eb55-4059-be9b-5edce48d8591"
+                  name="replies"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d1234dbf-3051-430c-a451-d75f543bcdf0"
+                      LastKnownName="List&lt;Comment&gt;"
+                      LastKnownLocation="Package_1434.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -1824,6 +2399,31 @@
           </property>
         </ownedAttributesInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="026d6d99-0e27-4aab-a0d1-f8641d7f9db2"
+        name="List&lt;Channel&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="456affeb-5450-484a-8b66-4afa2d4450da"
+        name="int" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="8f7e1fd1-e7c7-42dc-b318-94ae7c387373"
+        name="List&lt;Playlist&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="1a1ed43e-b447-45a1-94ea-84d9f6474c6e"
+        name="List&lt;Video&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="d1234dbf-3051-430c-a451-d75f543bcdf0"
+        name="List&lt;Comment&gt;" />
     </packageHasNamedElement>
   </packagedElements>
 </package>
