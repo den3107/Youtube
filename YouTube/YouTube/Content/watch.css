@@ -1,0 +1,162 @@
+.content-content{
+    width: 1280px;
+    margin: auto;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.video-content{
+    width: 854px;
+    margin-right: 10px;
+    float: left;
+}
+
+.video-content iframe{
+    margin-bottom: 10px;
+}
+
+.info-block{
+    background: white;
+    display: block;
+    padding: 15px 15px 5px 15px;
+    margin-bottom: 10px;
+}
+
+.info-block hr{
+    border-color: lightgray;
+    margin: 10px 0;
+}
+
+.info-content h1{
+    font-size: 20px;
+    margin: 0;
+}
+
+.channel-detail a{
+    color: black;
+}
+
+.vid-info1{
+    height: 30px;
+}
+
+.vid-info1 span.subscribe{
+    background: #cc181e;
+    padding: 5px;
+    float: left;
+}
+
+.vid-info1 span.subscribe a{
+    color: white;
+    font-weight: bold;
+}
+
+.vid-info1 span.subscribe a:hover{
+    text-decoration: underline;
+}
+
+.vid-info1 span.subscribed{
+    padding: 4px;
+    border: 1px solid lightgray;
+    border-right-width: 0;
+    float: left;
+    background: white;
+}
+
+.vid-info1 span.subscribed a{
+    color: dimgray;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.vid-info1 span.subscribed a:hover{
+    text-decoration: underline;
+}
+
+.vid-info1 .subscribers{
+    padding: 4px;
+    border: 1px solid lightgray;
+    float: left;
+    background: white;
+}
+
+.vid-info1 .views{
+    font-size: 19px;
+    float: right;
+}
+
+.vid-info2{
+    height: 30px;
+}
+
+.vid-info2 a{
+    color: darkgray;
+    text-decoration: none;
+}
+
+.vid-info2 a:hover{
+    color: black;
+    text-decoration: none;
+}
+
+.vid-info2 button{
+    float: left;
+    color: darkgray;
+    text-decoration: none;
+}
+
+.vid-info2 button:hover{
+    color: black;
+    text-decoration: none;
+}
+
+.vid-info2 .liking{
+    float: right;
+}
+
+.vid-info2 span.glyphicon{
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.comment-content textarea{
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 40px;
+}
+
+.comment-content .place-comment{
+    float: right;
+    margin-top: -40px;
+}
+
+.comment-block{
+    margin-bottom: 25px;
+}
+
+.comment-block a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.comment-block a:hover{
+    text-decoration: none;
+}
+
+.comment-block .glyphicon{
+    margin-left: 10px;
+}
+
+.comment-block .postdate{
+    color: darkgray;
+}
+
+.comment-block.comment-reply{
+    margin-left: 50px;
+}
+
+.suggestion-content{
+    width: 416px;
+    background: white;
+    float: left;
+}

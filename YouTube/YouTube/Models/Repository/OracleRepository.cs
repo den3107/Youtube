@@ -10,6 +10,7 @@ namespace YouTube.Repository
     using System.Collections.Generic;
     using System.Data;
     using System.Globalization;
+    using System.Linq;
     using Oracle.ManagedDataAccess.Client;
     using Types;
 
@@ -19,8 +20,8 @@ namespace YouTube.Repository
     {
         /// <summary>
         /// Connection string used to connect to database</summary>
-        private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99"; //// When publishing to INFRA
-        ////private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128"; //// For local testing
+        ////private readonly string connectionstring  = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=172.19.19.99"; //// When publishing to INFRA
+        private readonly string connectionstring = "User Id=YOUTUBE;Password=YOUTUBE;Data Source=192.168.19.128"; //// For local testing
 
         /// <summary>
         /// Add channel to user.</summary>
@@ -885,12 +886,14 @@ namespace YouTube.Repository
         }
 
         /// <summary>
-        /// Get userId from email.</summary>
+        /// Get whether video link exists or not.</summary>
         /// <returns>
-        /// Returns UserId</returns>
-        /// <param name="email">Email of user</param>
-        private int GetUserId(string email)
+        /// Returns whether video link exists or not</returns>
+        /// <param name="videolink">Video link to search for</param>
+        public bool DoesVideoLinkExist(string videolink)
         {
+            bool exists = false;
+
             var conn = new OracleConnection(this.connectionstring);
             using (conn)
             {
@@ -900,22 +903,28 @@ namespace YouTube.Repository
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
-                        "SELECT \"USERID\" FROM \"USER\" WHERE \"EMAIL\" = :email"
+                        "SELECT COUNT(*) FROM \"VIDEO\" WHERE \"VIDEOLINK\" = :videolink AND \"VIDEOTYPE\" = 'RECORDED'"
                 };
 
-                command.Parameters.Add("email", email);
-                return int.Parse(command.ExecuteScalar().ToString());
+                command.Parameters.Add("videolink", videolink);
+
+                if (int.Parse(command.ExecuteScalar().ToString()) > 0)
+                {
+                    exists = true;
+                }
             }
+
+            return exists;
         }
 
         /// <summary>
-        /// Get basic info of channel.</summary>
+        /// Get full information of video.</summary>
         /// <returns>
-        /// Returns basic info of channel</returns>
-        /// <param name="channelId">ChannelId to get info of</param>
-        private Channel GetChannel(int channelId)
+        /// Returns video object</returns>
+        /// <param name="videolink">Video link to search for</param>
+        public Video GetVideo(string videolink)
         {
-            Channel channel = null;
+            Video video = null;
 
             var conn = new OracleConnection(this.connectionstring);
             using (conn)
@@ -923,6 +932,53 @@ namespace YouTube.Repository
                 conn.Open();
                 var command = new OracleCommand
                 {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT V.DESCRIPTION, V.TITLE, TO_CHAR(V.UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, V.VIDEOID, V.CHANNELID, V.DOWNVOTES, V.UPVOTES, V.VIEWS FROM \"VIDEO\" V WHERE V.VIDEOLINK = :videolink AND V.VIDEOTYPE = 'RECORDED'"
+                };
+
+                command.Parameters.Add("videolink", videolink);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string description = reader["DESCRIPTION"].ToString();
+                        string title = reader["TITLE"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                        int videoId = int.Parse(reader["VIDEOID"].ToString());
+                        Channel creator = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
+                        int downvotes = int.Parse(reader["DOWNVOTES"].ToString());
+                        int upvotes = int.Parse(reader["UPVOTES"].ToString());
+                        int views = int.Parse(reader["VIEWS"].ToString());
+                        List<Comment> comments = this.GetComments(videoId);
+
+                        //// Order comments by upload date
+                        comments = comments.OrderBy(c => c.UploadDate).ToList();
+
+                        video = new Video(description, title, uploadDate, videoId, videolink, creator, downvotes, upvotes, views, comments);
+                    }
+                }
+            }
+
+            return video;
+        }
+
+        /// <summary>
+        /// Get basic info of channel.</summary>
+        /// <returns>
+        /// Returns basic info of channel</returns>
+        /// <param name="channelId">ChannelId to get info of</param>
+        public Channel GetChannel(int channelId)
+        {
+            Channel channel = null;
+
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand {
                     Connection = conn,
                     CommandType = CommandType.Text,
                     CommandText =
@@ -945,6 +1001,30 @@ namespace YouTube.Repository
             }
 
             return channel;
+        }
+
+        /// <summary>
+        /// Get userId from email.</summary>
+        /// <returns>
+        /// Returns UserId</returns>
+        /// <param name="email">Email of user</param>
+        private int GetUserId(string email)
+        {
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT \"USERID\" FROM \"USER\" WHERE \"EMAIL\" = :email"
+                };
+
+                command.Parameters.Add("email", email);
+                return int.Parse(command.ExecuteScalar().ToString());
+            }
         }
 
         /// <summary>
@@ -1025,6 +1105,96 @@ namespace YouTube.Repository
             }
 
             return channels;
+        }
+
+        /// <summary>
+        /// Get comments placed on video.</summary>
+        /// <returns>
+        /// Returns comments place on video</returns>
+        /// <param name="videoId">VideoId to get comments of</param>
+        private List<Comment> GetComments(int videoId)
+        {
+            List<Comment> comments = new List<Comment>();
+
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT DISTINCT C.COMMENTID, C.CONTENT, TO_CHAR(C.UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, C.CHANNELID, C.DOWNVOTES, C.UPVOTES FROM \"COMMENT\" C JOIN \"REPLY\" R ON C.VIDEOID = R.VIDEOID AND C.COMMENTID NOT IN (SELECT REPLYID FROM \"REPLY\" R WHERE R.VIDEOID = C.VIDEOID) WHERE C.VIDEOID = :videoid"
+                };
+
+                command.Parameters.Add("videoId", videoId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int commentId = int.Parse(reader["COMMENTID"].ToString());
+                        string content = reader["CONTENT"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                        Channel author = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
+                        int downVotes = int.Parse(reader["DOWNVOTES"].ToString());
+                        int upVotes = int.Parse(reader["UPVOTES"].ToString());
+                        List<Comment> replies = this.GetReplies(videoId, commentId);
+
+                        comments.Add(new Comment(commentId, content, uploadDate, author, videoId, downVotes, false, upVotes, replies));
+                    }
+                }
+            }
+
+            //// TODO fix query so reply list is filled instead
+
+            return comments;
+        }
+
+        /// <summary>
+        /// Get replies placed on comment.</summary>
+        /// <returns>
+        /// Returns replies placed on comment</returns>
+        /// <param name="videoId">VideoId to get comments of</param>
+        /// <param name="commentId">CommentId to get replies from</param>
+        private List<Comment> GetReplies(int videoId, int commentIdIn)
+        {
+            List<Comment> replies = new List<Comment>();
+
+            var conn = new OracleConnection(this.connectionstring);
+            using (conn)
+            {
+                conn.Open();
+                var command = new OracleCommand {
+                    Connection = conn,
+                    CommandType = CommandType.Text,
+                    CommandText =
+                        "SELECT C.COMMENTID, C.CONTENT, TO_CHAR(C.UPLOADDATE, 'DD/MM/YYYY HH24:MI:SS') AS UPLOADDATE, C.CHANNELID, C.DOWNVOTES, C.UPVOTES FROM \"COMMENT\" C JOIN \"REPLY\" R ON C.VIDEOID = R.VIDEOID AND C.COMMENTID = R.REPLYID AND :commentId = R.COMMENTID WHERE C.VIDEOID = :videoid"
+                };
+
+                command.Parameters.Add("commentId", commentIdIn);
+                command.Parameters.Add("videoId", videoId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int commentId = int.Parse(reader["COMMENTID"].ToString());
+                        string content = reader["CONTENT"].ToString();
+                        DateTime uploadDate = DateTime.ParseExact(reader["UPLOADDATE"].ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                        Channel author = this.GetChannel(int.Parse(reader["CHANNELID"].ToString()));
+                        int downVotes = int.Parse(reader["DOWNVOTES"].ToString());
+                        int upVotes = int.Parse(reader["UPVOTES"].ToString());
+
+                        replies.Add(new Comment(commentId, content, uploadDate, author, videoId, downVotes, true, upVotes));
+                    }
+                }
+            }
+
+            //// TODO fix query so reply list is filled instead
+
+            return replies;
         }
     }
 }

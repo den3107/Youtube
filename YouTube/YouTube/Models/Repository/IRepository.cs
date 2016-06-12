@@ -201,5 +201,26 @@ namespace YouTube.Repository
         /// Returns full info of channel</returns>
         /// <param name="channelId">ChannelId of channel</param>
         Channel GetFullChannel(int channelId);
+
+        /// <summary>
+        /// Get whether video link exists or not.</summary>
+        /// <returns>
+        /// Returns whether video link exists or not</returns>
+        /// <param name="videolink">Video link to search for</param>
+        bool DoesVideoLinkExist(string videolink);
+
+        /// <summary>
+        /// Get full information of video.</summary>
+        /// <returns>
+        /// Returns video object</returns>
+        /// <param name="videolink">Video link to search for</param>
+        Video GetVideo(string videolink);
+
+        /// <summary>
+        /// Get basic info of channel.</summary>
+        /// <returns>
+        /// Returns basic info of channel</returns>
+        /// <param name="channelId">ChannelId to get info of</param>
+        Channel GetChannel(int channelId);
     }
 }

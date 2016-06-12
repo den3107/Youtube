@@ -307,5 +307,35 @@ namespace YouTube.RepositoryDAL
         {
             return this.repository.GetFullChannel(channelId);
         }
+
+        /// <summary>
+        /// Get whether video link exists or not.</summary>
+        /// <returns>
+        /// Returns whether video link exists or not</returns>
+        /// <param name="videolink">Video link to search for</param>
+        public bool DoesVideoLinkExist(string videolink)
+        {
+            return this.repository.DoesVideoLinkExist(videolink);
+        }
+
+        /// <summary>
+        /// Get full information of video.</summary>
+        /// <returns>
+        /// Returns video object</returns>
+        /// <param name="videolink">Video link to search for</param>
+        public Video GetVideo(string videolink)
+        {
+            return this.repository.GetVideo(videolink);
+        }
+
+        /// <summary>
+        /// Get basic info of channel.</summary>
+        /// <returns>
+        /// Returns basic info of channel</returns>
+        /// <param name="channelId">ChannelId to get info of</param>
+        public Channel GetChannel(int channelId)
+        {
+            return this.repository.GetChannel(channelId);
+        }
     }
 }

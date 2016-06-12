@@ -1,5 +1,4 @@
 ﻿@using YouTube.Types
-@using System
 @using System.Collections.Generic
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,8 +16,8 @@
                     <div class="thumbnail">
                         <img src="https://i.ytimg.com/vi/@video.VideoLink/0.jpg" />
                         <div class="caption">
-                            <a href="/watch?v=@video.VideoLink">@video.Title</a><br>
-                            <span><a href="/channel/@video.Creator.ChannelId">@video.Creator.Name</a></span><br>
+                            <a href = "@Url.Action("Index", "watch", new { v = video.VideoLink })"> @video.Title </a><br>
+                            <span><a href="@Url.Action("Index", "channel", new { channelId = video.Creator.ChannelId })">@video.Creator.Name</a></span><br>
                             <span id="views">@video.Views views</span><span id="date">@video.UploadDate.ToString("dd/MM/yyyy")</span>
                         </div>
                     </div>
@@ -33,8 +32,8 @@
             Channel channel = Session["ActiveChannel"] as Channel;
             foreach(Channel subscription in channel.Subscriptions)
             {
-                List<Video> suggestedVideos = subscription.GetNewVideos(1);
-                suggestedVideos.AddRange(subscription.GetPopularVideos(1));
+                List<Video> suggestedVideos = subscription.GetNewVideos(3);
+                suggestedVideos.AddRange(subscription.GetPopularVideos(3));
                 // Clear duplicate videos
                 suggestedVideos = suggestedVideos.GroupBy(x => x.VideoId).Select(x => x.First()).ToList();
                 if (suggestedVideos.Count > 0)
@@ -47,8 +46,8 @@
                         <div class="thumbnail">
                             <img src="https://i.ytimg.com/vi/@video.VideoLink/0.jpg" />
                             <div class="caption">
-                                <a href="/watch?v=@video.VideoLink">@video.Title</a><br>
-                                <span><a href="/channel/@video.Creator.ChannelId">@video.Creator.Name</a></span><br>
+                                <a href="@Url.Action("Index", "watch", new { v = video.VideoLink })">@video.Title</a><br>
+                                <span><a href="@Url.Action("Index", "channel", new { channelId = video.Creator.ChannelId })">@video.Creator.Name</a></span><br>
                                 <span id="views">@video.Views views</span><span id="date">@video.UploadDate.ToString("dd/MM/yyyy")</span>
                             </div>
                         </div>

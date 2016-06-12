@@ -26,7 +26,7 @@
 <body>
     <div class="container">
         <form class="form-signin" method="post">
-            <a class="navbar-brand logo" href="#"></a>
+            <a class="navbar-brand logo" href="@Url.Action("Index", "home")"></a>
             <h2 class="form-signin-heading">sign in</h2>
             <div @{
                 if (ViewBag.LoginFailed != null && (bool) ViewBag.LoginFailed)

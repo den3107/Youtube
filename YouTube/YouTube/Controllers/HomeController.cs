@@ -27,6 +27,9 @@ namespace YouTube.Controllers
         /// <param name="newChannel">Channel name to set active</param>
         public ActionResult Index(string newChannel = null)
         {
+            //// Set css file
+            ViewBag.cssName = "index";
+
             List<Video> popularVideos = new List<Video>();
             popularVideos.AddRange(this.dal.GetPopularVideos(4));
             popularVideos.AddRange(this.dal.GetNewVideos(2));
@@ -41,7 +44,7 @@ namespace YouTube.Controllers
                     {
                         user.SetActivechannel(i);
                         this.Session["ActiveChannel"] = user.ActiveChannel;
-                        break;
+                        return RedirectToAction("Index", "home"); // Redirect back to here, only without the parameter
                     }
                 }
             }

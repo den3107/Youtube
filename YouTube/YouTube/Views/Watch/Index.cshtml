@@ -1,0 +1,124 @@
+﻿@using YouTube.Types
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Video video = ViewBag.video as Video;
+}
+
+<div class="content">
+    <div class="content-content">
+        <div class="video-content">
+            <iframe width="854" height="480" src="https://www.youtube.com/embed/@video.VideoLink" frameborder="0" allowfullscreen></iframe>
+            <!-- end video -->
+            <div class="info-block info-content">
+                <h1>
+                    @video.Title
+                </h1>
+                <b>@video.Creator.Name</b>
+                <div class="vid-info1">
+                    @if (Session["LoggedInUser"] != null && Session["ActiveChannel"] != null)
+                    {
+                        // Check if user is subscribed to channel or not
+                        bool success = false;
+                        Channel channel = Session["ActiveChannel"] as Channel;
+                        foreach (Channel subscription in channel.Subscriptions)
+                        {
+                            if (subscription.ChannelId == video.Creator.ChannelId)
+                            {
+                                success = true;
+                            }
+                        }
+
+                        if (success)
+                        {
+                            <span class="subscribed"><a href="@Url.Action("Unsubscribe", "Watch", new { channelId = video.Creator.ChannelId, v = video.VideoLink })">unsubscribe</a></span> /* TODO implement subscribe*/
+                        }
+                        else
+                        {
+                            <span class="subscribe"><a href="@Url.Action("Subscribe", "Watch", new { channelId = video.Creator.ChannelId, v = video.VideoLink })">subscribe</a></span> /* TODO implement subscribe*/
+                        }
+                    }
+                    else
+                    {
+                        <span class="subscribe"><a href="@Url.Action("Index", "Login")">subscribe</a></span>
+                    }
+                    <span class="subscribers">No sub count available</span> @{/* TODO add query to get amount of subscribers*/}
+                    <span class="views">@{
+                                            switch (video.Views)
+                                            {
+                                                case 0:
+                                                    <text>No views</text>
+                                                    break;
+                                                case 1:
+                                                    <text>1 view</text>
+                                                    break;
+                                                default:
+                                                    <text>@video.Views views</text>
+                                                    break;
+                                            }
+                                        }</span>
+                </div>
+                <hr>
+                <div class="vid-info2">
+                    <button type="button" class="btn-link glyphicon glyphicon-plus" data-toggle="collapse" data-target=".playlist-dropdown"></button>Add to playlist
+
+                    <span class="liking"><a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>@video.UpVotes<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a>@video.DownVotes</span> @{/* TODO implement (dis)liking*/}
+                </div>
+            </div>
+            <div class="playlist-dropdown collapse">
+                <div class="dropdown open">
+                    <ul class="">
+                        <li><a href="#">Dummy</a></li>
+                        <li><a href="#">Another dummy</a></li>
+                    </ul>
+                    @{/* TODO implement playlist addition*/}
+                </div>
+            </div>
+            <!-- end playlist dropdown -->
+            <!-- end video info -->
+            <div class="info-block description-content">
+                <b>Published @video.UploadDate.ToString("d MMM yyyy")</b><br>
+                @video.Description.Replace("\n", "<br>")
+            </div><!-- end description -->
+            <div class="info-block comment-content">
+                <form method="post">
+                    <textarea rows="4" placeholder="Place comment"></textarea>
+                    <a href=""><button class="btn btn-primary place-comment" type="submit">Place comment</button></a> @{/* TODO implement comment placement */}
+                </form>
+                <!-- end placing comment form -->
+                <hr>
+                @foreach (Comment comment in video.Comments)
+                {
+                    <div class="comment-block">
+                        <a href="@Url.Action("Index", "channel", new { channelId = comment.Author.ChannelId })">@comment.Author.Name</a>
+                        <span class="postdate">@comment.UploadDate.ToString("d MMM yyyy")</span><br>
+                        <span>@comment.Content.Replace("\n", "<br>")</span><br>
+                        <span class="postdate">Reply • </span> <!-- should actually be a button to show the hidden form for replying --> @{/* TODO implement comment replying */}
+                        <a>@((comment.UpVotes - comment.DownVotes).ToString())</a> <span class="glyphicon glyphicon-thumbs-up"></span><span class="glyphicon glyphicon-thumbs-down"></span> @{/* TODO implement comment (dis)liking */}
+                    </div>
+                    <!-- end comment -->
+                    foreach (Comment reply in comment.Replies)
+                    {
+                        <div class="comment-block comment-reply">
+                            <a href="@Url.Action("Index", "channel", new { channelId = reply.Author.ChannelId })">@reply.Author.Name</a>
+                            <span class="postdate">@reply.UploadDate.ToString("d MMM yyyy")</span><br>
+                            <span>@reply.Content.Replace("\n", "<br>")</span><br>
+                            <span class="postdate">Reply • </span> <!-- should actually be a button to show the hidden form for replying -->
+                            <a>@((reply.UpVotes - reply.DownVotes).ToString())</a> <span class="glyphicon glyphicon-thumbs-up"></span><span class="glyphicon glyphicon-thumbs-down"></span>
+                        </div>
+                        <!-- end reply -->
+                    }
+                    <!-- end comment/reply list -->
+                }
+            </div>
+        </div>
+        <!-- end comments -->
+        <div class="suggestion-content">
+            <div class="info-block">
+                Not implemented yet.
+            </div>
+        </div>
+        <!-- end suggestion side-panel  -->
+    </div>
+</div>

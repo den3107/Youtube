@@ -22,8 +22,7 @@ namespace YouTube.Controllers
             this.Session["ActiveChannel"] = null;
 
             //// Head back to main page
-            Response.Redirect("./", true);
-            return this.View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
