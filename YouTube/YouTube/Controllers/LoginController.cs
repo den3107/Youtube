@@ -44,11 +44,11 @@ namespace YouTube.Controllers
                 User user = new User(inputEmail, this.dal.GetUserChannels(inputEmail));
                 this.Session["LoggedInUser"] = user;
                 this.Session["ActiveChannel"] = user.ActiveChannel;
-                Response.Redirect("./", true);
+                return RedirectToAction("Index", "home");
             }
             else
             {
-                ViewBag.LoginFailed = false;
+                ViewBag.LoginFailed = true;
             }
 
             return this.View();
